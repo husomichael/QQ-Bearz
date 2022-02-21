@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Soundboard from '../Soundboard/Soundboard.jsx';
 
 import './App.css';
 
@@ -108,6 +109,12 @@ function App() {
               // Otherwise, show the Landing page
               <LandingPage />
             }
+          </Route>
+          <Route
+            exact
+            path="/soundboard"
+          >
+            <Soundboard />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
