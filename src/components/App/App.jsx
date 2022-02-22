@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Soundboard from '../Soundboard/Soundboard.jsx';
+import AddSoundClip from '../AddSoundClip/AddSoundClip.jsx';
 
 import './App.css';
 
@@ -110,12 +111,18 @@ function App() {
               <LandingPage />
             }
           </Route>
-          <Route
+          <ProtectedRoute
             exact
             path="/soundboard"
           >
             <Soundboard />
-          </Route>
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/addsoundclip"
+          >
+            <AddSoundClip />
+          </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
