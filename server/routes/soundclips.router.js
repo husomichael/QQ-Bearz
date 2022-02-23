@@ -7,13 +7,8 @@ const cloudinaryUpload = require('../modules/cloudinary-config');
 // POSTs a new image to the DB
 router.post('/:id', rejectUnauthenticated, cloudinaryUpload.single('image'), async (req, res) => {
   console.log('req.file:', req.file)
-  const imageUrl = req.file.path;
+  const soundclipUrl = req.file.path;
   const sqlText = `
-    INSERT INTO "meeting_uploads"
-      ("image_title", "image_url", "meeting_id", "user_id")
-      VALUES
-      ($1, $2, $3, $4)
-      RETURNING "meeting_id";
   `;
   const sqlValues = ["Placeholder Title", imageUrl, req.params.id, req.user.id];
   pool.query(sqlText, sqlValues)

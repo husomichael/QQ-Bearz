@@ -57,6 +57,15 @@ function AddSoundClip() {
           }}
         />
       </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{mt: 3}}
+      >
+        <input type="file"
+        accept="audio/mp3" />
+      </Box>
     </div>
   );
 };
