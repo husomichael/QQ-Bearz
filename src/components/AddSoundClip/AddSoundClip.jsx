@@ -8,10 +8,20 @@ function AddSoundClip() {
   const history = useHistory();
   const [clipTitle, setClipTitle] = useState('');
   const [tags, setTags] = useState('');
+  const [selectedFile, setSelectedFile] = useState('');
 
   function goToSoundboard(){
     history.push('/soundboard');
   };
+
+  function handleSubmit(){
+    if (selectedFile != '' && clipTitle != '') {
+      dispatch({
+        type: 'ADD_SOUND_CLIP',
+        payload: { clip: selectedFile, tags: tags, title: clipTitle }
+      });
+    };
+  }
 
   return (
     <div>
@@ -64,7 +74,18 @@ function AddSoundClip() {
         sx={{mt: 3}}
       >
         <input type="file"
-        accept="audio/mp3" />
+        accept="audio/mp3"
+        onChange={(e) => setSelectedFile(e.target.files[0])} />
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{mt: 3}}
+      >
+        <Button onChange={handleSubmit}>
+          Submit
+        </Button>
       </Box>
     </div>
   );

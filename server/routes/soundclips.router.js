@@ -10,7 +10,7 @@ router.post('/:id', rejectUnauthenticated, cloudinaryUpload.single('image'), asy
   const soundclipUrl = req.file.path;
   const sqlText = `
   `;
-  const sqlValues = ["Placeholder Title", imageUrl, req.params.id, req.user.id];
+  const sqlValues = [req.user.id];
   pool.query(sqlText, sqlValues)
     .then((dbRes) => {
       const meetingId = { meeting_id: dbRes.rows[0].meeting_id };
