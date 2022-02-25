@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Box, Typography, Button, TextField } from '@mui/material';
 
 function AddSoundClip() {
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const [clipTitle, setClipTitle] = useState('');
   const [tags, setTags] = useState('');
   const [selectedFile, setSelectedFile] = useState('');
@@ -15,13 +17,22 @@ function AddSoundClip() {
   };
 
   function handleSubmit(){
-    if (selectedFile != '' && clipTitle != '') {
+    // if (selectedFile != '' && clipTitle != '') {
+      console.log('selectedFile:', selectedFile);
       dispatch({
         type: 'ADD_SOUND_CLIP',
         payload: { clip: selectedFile, tags: tags, title: clipTitle }
       });
-    };
-  }
+    // };
+  };
+
+  function handleClipTitle(e){
+    setClipTitle(e.target.value);
+  };
+
+  function handleSetTags(e){
+    setTags(e.target.value);
+  };
 
   return (
     <div>
@@ -46,7 +57,7 @@ function AddSoundClip() {
         <TextField
           placeholder="Add a Title"
           value={clipTitle}
-          onChange={setClipTitle}
+          onChange={handleClipTitle}
           sx={{
             backgroundColor: 'white'
           }}
@@ -61,7 +72,7 @@ function AddSoundClip() {
         <TextField
           placeholder="Add Tags"
           value={tags}
-          onChange={setTags}
+          onChange={handleSetTags}
           sx={{
             backgroundColor: 'white'
           }}
@@ -83,7 +94,7 @@ function AddSoundClip() {
         alignItems="center"
         sx={{mt: 3}}
       >
-        <Button onChange={handleSubmit}>
+        <Button onClick={handleSubmit}>
           Submit
         </Button>
       </Box>
