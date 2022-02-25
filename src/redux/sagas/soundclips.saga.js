@@ -1,24 +1,27 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* addPhoto(action){
+function* addSoundClip(action){
+  console.log('action.payload:', action.payload);
   try{
     const headers = {
       'content-type': 'multipart/form-data'
     };
     const soundClip = new FormData();
-    imageForm.append('soundclip', action.payload.clip);
+    console.log('soundClip before append:', soundClip);
+    soundClip.append('soundclip', action.payload.clip, 'audio/mp3');
+    console.log('soundClip after append:', soundClip);
     const response = yield axios({
       method: 'POST',
       url: `/api/soundclips/${action.payload.id}`,
       headers: headers, 
-      data: {clip: soundClip, tags: action.payload.tags, title: action.payload.title}
+      data: soundClip
     })
     yield put({
       type: 'FETCH_SOUND_CLIPS'
     })
   }catch(error){
-    console.log('addPhoto catch error:', error);
+    console.log('addSoundClip catch error:', error);
   };
 };
 
