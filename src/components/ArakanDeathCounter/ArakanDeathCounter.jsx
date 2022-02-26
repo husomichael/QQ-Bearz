@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Box } from '@mui/material';
 
 function ArakanDeathCounter(){
+
+  
+
   return(
     <div>
       <Box
@@ -12,7 +15,7 @@ function ArakanDeathCounter(){
         alignItems="center"
       >
         <Typography variant="h2">
-          Arakan Deaths
+          Arakan Deaths: {arakanDeaths}
         </Typography>
       </Box>
     </div>
