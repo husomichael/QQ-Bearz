@@ -58,10 +58,27 @@ function* fetchArakanDeaths(action){
       url: `/api/arakan/deaths`,
     })
     yield put({
-      type: 'SET_ARAKAN_DEATHS'
+      type: 'SET_ARAKAN_DEATHS',
+      payload: response.data
     })
   }catch(error){
     console.log('fetchArakanDeaths catch error:', error);
+  };
+};
+
+function* addArakanDeath(action){
+  console.log('addArakanDeath payload:', action.payload);
+  try{
+    const response = yield axios({
+      method: 'PUT',
+      url: '/api/arakan/deaths',
+      data: action.payload
+    })
+    yield put({
+      type: 'FETCH_ARAKAN_DEATHS'
+    })
+  }catch(error){
+    console.log('addArakanDeath catch error:', error);
   };
 };
 
@@ -70,6 +87,7 @@ function* uploadsSaga(){
   yield takeEvery('FETCH_ARAKAN_PHOTOS', fetchArakanPhotos);
   yield takeEvery('DELETE_ARAKAN_PHOTO', deleteArakanPhoto);
   yield takeEvery('FETCH_ARAKAN_DEATHS', fetchArakanDeaths);
+  yield takeEvery('ADD_ARAKAN_DEATH', addArakanDeath);
 };
 
 export default uploadsSaga;

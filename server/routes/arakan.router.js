@@ -35,20 +35,40 @@ router.get('/', rejectUnauthenticated, (req, res) =>{
       res.send(dbRes.rows);
     })
     .catch((dbErr) => {
+      console.log(dbErr);
+      res.sendStatus(500);
+    });
+});
+
+router.put('/deaths', rejectUnauthenticated, (req, res) => {
+  const sqlText = `
+    UPDATE "arakan_death_count"
+    SET "death_count" = $1
+    WHERE "id" = $2;
+  `;
+  const deaths = req.body.deaths
+  const sqlValues = [deaths, 1];
+  pool.query(sqlText, sqlValues)
+    .then((dbRes) => {
+      res.sendStatus(200);
+    })
+    .catch((dbErr) => {
+      console.log(dbErr);
       res.sendStatus(500);
     });
 });
 
 router.get('/deaths', rejectUnauthenticated, (req, res) =>{
   const sqlText = `
-    SELECT "death_count" FROM "arakan_deaths"
+    SELECT * FROM "arakan_death_count"
+    WHERE "id" = $1;
   `;
-  const sqlValues = '';
-  pool.query(sqlText, sqlValues)
+  pool.query(sqlText, [1])
     .then((dbRes) => {
       res.send(dbRes.rows);
     })
     .catch((dbErr) => {
+      console.log(dbErr);
       res.sendStatus(500);
     });
 });
