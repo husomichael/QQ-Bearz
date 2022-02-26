@@ -8,12 +8,10 @@ function* addSoundClip(action){
       'content-type': 'multipart/form-data'
     };
     const soundClip = new FormData();
-    console.log('soundClip before append:', soundClip);
-    soundClip.append('soundclip', action.payload.clip, 'audio/mp3');
-    console.log('soundClip after append:', soundClip);
+    soundClip.append('soundclip', action.payload.clip);
     const response = yield axios({
       method: 'POST',
-      url: `/api/soundclips/${action.payload.id}`,
+      url: `/api/soundclips/`,
       headers: headers, 
       data: soundClip
     })
