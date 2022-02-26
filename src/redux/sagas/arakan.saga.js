@@ -51,10 +51,25 @@ function* deleteArakanPhoto(action){
   };
 };
 
+function* fetchArakanDeaths(action){
+  try{
+    const response = yield axios({
+      method: 'GET',
+      url: `/api/arakan/deaths`,
+    })
+    yield put({
+      type: 'SET_ARAKAN_DEATHS'
+    })
+  }catch(error){
+    console.log('fetchArakanDeaths catch error:', error);
+  };
+};
+
 function* uploadsSaga(){
   yield takeEvery('ADD_ARAKAN_PHOTO', addArakanPhoto);
   yield takeEvery('FETCH_ARAKAN_PHOTOS', fetchArakanPhotos);
   yield takeEvery('DELETE_ARAKAN_PHOTO', deleteArakanPhoto);
+  yield takeEvery('FETCH_ARAKAN_DEATHS', fetchArakanDeaths);
 };
 
 export default uploadsSaga;
