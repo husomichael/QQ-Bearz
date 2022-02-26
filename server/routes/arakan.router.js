@@ -2,7 +2,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const cloudinaryUpload = require('../modules/cloudinary-config');
+const cloudinaryUpload = require('../modules/cloudinary-config-arakan.js');
 
 // POSTs a new image to the DB
 router.post('/', cloudinaryUpload.single('image'), async (req, res) => {
@@ -10,7 +10,19 @@ router.post('/', cloudinaryUpload.single('image'), async (req, res) => {
   const imageUrl = req.file.path;
   const sqlText = `
     INSERT INTO "arakan_deaths"
-  `
+    ("url", "user_id")
+    VALUES
+    ($1, $2);
+  `;
+  const sqlValues = [imageURL, req.user.id];
+  pool.query(sqlText, sqlValues)
+    .then((dbRes) => {
+      res.sendStatus(200);
+    })
+    .catch((dbErr) => {
+      console.log('/arakan POST error:', dbErr);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;
