@@ -27,6 +27,10 @@ function ArakanDeathCounter(){
     });
   };
 
+  function goToAddPhoto(){
+    history.push(`/addcorpsephoto`);
+  };
+
   return(
     <div>
       <Box
@@ -45,6 +49,9 @@ function ArakanDeathCounter(){
       >
         <Button onClick={addDeath} variant="contained">
           Add To Deaths
+        </Button>
+        <Button onClick={goToAddPhoto} variant="contained">
+          Add Corpse Photo
         </Button>
       </Box>
     </div>
