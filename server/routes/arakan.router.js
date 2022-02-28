@@ -27,7 +27,7 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('image'), async 
 
 router.get('/', rejectUnauthenticated, (req, res) =>{
   const sqlText = `
-    SELECT "url" FROM "arakan_deaths"
+    SELECT * FROM "arakan_deaths"
   `;
   const sqlValues = '';
   pool.query(sqlText, sqlValues)

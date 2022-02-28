@@ -9,6 +9,7 @@ function ArakanDeathCounter(){
   const dispatch = useDispatch();
   const history = useHistory();
   const arakan = useSelector((store) => store.arakan);
+  const arakandeaths = useSelector((store) => store.arakandeaths)
 
   console.log('arakan up one:', arakan);
 
@@ -27,7 +28,7 @@ function ArakanDeathCounter(){
   function addDeath(){
     dispatch({
       type: 'ADD_ARAKAN_DEATH',
-      payload: {deaths: arakan.deaths + 1}
+      payload: {deaths: arakandeaths.death_count+ 1}
     });
   };
 
@@ -43,7 +44,7 @@ function ArakanDeathCounter(){
         alignItems="center"
       >
         <Typography variant="h2">
-          Arakan Deaths: {arakan.deaths}
+          Arakan Deaths: {arakandeaths.death_count}
         </Typography>
       </Box>
       <Box
