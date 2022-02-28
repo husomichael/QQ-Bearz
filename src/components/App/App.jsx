@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Soundboard from '../Soundboard/Soundboard.jsx';
 import AddSoundClip from '../AddSoundClip/AddSoundClip.jsx';
 import ArakanDeathCounter from '../ArakanDeathCounter/ArakanDeathCounter.jsx';
+import AddCorpsePhoto from '../AddCorpsePhoto/AddCorpsePhoto.jsx';
 
 import './App.css';
 
@@ -129,6 +130,12 @@ function App() {
             path="/arakandeathcounter"
           >
             <ArakanDeathCounter />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/addcorpsephoto"
+          >
+            <AddCorpsePhoto />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

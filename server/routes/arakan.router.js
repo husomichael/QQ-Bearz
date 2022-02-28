@@ -14,7 +14,7 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('image'), async 
     VALUES
     ($1, $2);
   `;
-  const sqlValues = [imageURL, req.user.id];
+  const sqlValues = [imageUrl, req.user.id];
   pool.query(sqlText, sqlValues)
     .then((dbRes) => {
       res.sendStatus(200);
@@ -65,7 +65,7 @@ router.get('/deaths', rejectUnauthenticated, (req, res) =>{
   `;
   pool.query(sqlText, [1])
     .then((dbRes) => {
-      res.send(dbRes.rows);
+      res.send(dbRes.rows[0]);
     })
     .catch((dbErr) => {
       console.log(dbErr);

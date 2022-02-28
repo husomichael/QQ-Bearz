@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Box, Button } from '@mui/material';
+import ArakanDeathCounterItem from '../ArakanDeathCounterItem/ArakanDeathCounterItem.jsx';
 
 function ArakanDeathCounter(){
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const arakan = useSelector((store) => store.arakan);
+
+  console.log('arakan up one:', arakan);
 
   useEffect(() => {
     dispatch({
@@ -30,7 +34,7 @@ function ArakanDeathCounter(){
   function goToAddPhoto(){
     history.push(`/addcorpsephoto`);
   };
-
+  console.log(arakan);
   return(
     <div>
       <Box
@@ -54,6 +58,13 @@ function ArakanDeathCounter(){
           Add Corpse Photo
         </Button>
       </Box>
+        {arakan.map((photo) =>{
+          return(
+            <div key={photo.id}>
+              <ArakanDeathCounterItem photo={photo} />
+            </div>
+          )
+        })}
     </div>
   )
 };

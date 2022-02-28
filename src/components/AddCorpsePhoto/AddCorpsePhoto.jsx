@@ -16,7 +16,7 @@ function AddCorpsePhoto() {
       console.log('selectedFile:', selectedFile);
       dispatch({
         type: 'ADD_ARAKAN_PHOTO',
-        payload: { clip: selectedFile, title: photoTitle }
+        payload: { image: selectedFile, title: photoTitle }
       });
     // };
   };
@@ -50,7 +50,7 @@ function AddCorpsePhoto() {
         sx={{mt: 3}}
       >
         <TextField
-          placeholder="Add a Title"
+          placeholder="Photo Title"
           value={photoTitle}
           onChange={handlePhotoTitle}
           sx={{
@@ -74,7 +74,7 @@ function AddCorpsePhoto() {
         alignItems="center"
         sx={{mt: 3}}
       >
-        <Button onClick={handleSubmit}>
+        <Button onClick={handleSubmit} variant="contained">
           Submit
         </Button>
       </Box>
