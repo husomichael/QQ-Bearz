@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box, Button, Grid } from '@mui/material';
 import ArakanDeathCounterItem from '../ArakanDeathCounterItem/ArakanDeathCounterItem.jsx';
 
 function ArakanDeathCounter(){
@@ -59,13 +59,15 @@ function ArakanDeathCounter(){
           Add Corpse Photo
         </Button>
       </Box>
+      <Grid container spacing={1} maxHeight="88%" mt={2} sx={{padding: '10px'}}>
         {arakan.map((photo) =>{
           return(
-            <div key={photo.id}>
+            <Grid item xs={4} key={photo.id}>
               <ArakanDeathCounterItem photo={photo} />
-            </div>
+            </Grid>
           )
         })}
+      </Grid>
     </div>
   )
 };
