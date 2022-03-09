@@ -23,6 +23,7 @@ import Soundboard from '../Soundboard/Soundboard.jsx';
 import AddSoundClip from '../AddSoundClip/AddSoundClip.jsx';
 import ArakanDeathCounter from '../ArakanDeathCounter/ArakanDeathCounter.jsx';
 import AddCorpsePhoto from '../AddCorpsePhoto/AddCorpsePhoto.jsx';
+import UserProfile from '../UserProfile/UserProfile.jsx';
 
 import './App.css';
 
@@ -136,6 +137,12 @@ function App() {
             path="/addcorpsephoto"
           >
             <AddCorpsePhoto />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/userprofile"
+          >
+            <UserProfile />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
