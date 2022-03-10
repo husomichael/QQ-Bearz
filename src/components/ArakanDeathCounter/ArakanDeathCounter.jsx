@@ -43,7 +43,7 @@ function ArakanDeathCounter(){
         justifyContent="center"
         alignItems="center"
       >
-        <Typography variant="h2">
+        <Typography variant="h2" sx={{mt: 4}}>
           Arakan Deaths: {arakandeaths.death_count}
         </Typography>
       </Box>
@@ -52,14 +52,14 @@ function ArakanDeathCounter(){
         justifyContent="center"
         alignItems="center"
       >
-        <Button onClick={addDeath} variant="contained">
+        <Button onClick={addDeath} variant="contained" sx={{mt: 4}}>
           Add To Deaths
         </Button>
-        <Button onClick={goToAddPhoto} variant="contained">
+        <Button onClick={goToAddPhoto} variant="contained" sx={{mt: 4, ml: 4}}>
           Add Corpse Photo
         </Button>
       </Box>
-      <Grid container spacing={1} maxHeight="88%" mt={2} sx={{padding: '10px'}}>
+      <Grid container spacing={1} maxHeight="88%" mt={4} sx={{padding: '10px'}}>
         {arakan.map((photo) =>{
           return(
             <Grid item xs={4} key={photo.id}>
