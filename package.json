@@ -6,6 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@google-cloud/storage": "^5.18.3",
     "@mui/material": "^5.4.2",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",

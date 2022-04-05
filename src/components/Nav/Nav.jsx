@@ -32,6 +32,14 @@ function Nav() {
               Info Page
             </Link>
 
+            <Link className="navLink" to="/soundboard">
+              Soundboard
+            </Link>
+
+            <Link className="navLink" to="/arakandeathcounter">
+              Arakan Deaths
+            </Link>
+
             <LogOutButton className="navLink" />
           </>
         )}
