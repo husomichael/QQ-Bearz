@@ -28,6 +28,6 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
     });
 });
 
-// router.get('/', rejectUnauthenticated, (req, res))
+
 
 module.exports = router;

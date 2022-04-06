@@ -23,6 +23,7 @@ function AddSoundClip() {
         type: 'ADD_SOUND_CLIP',
         payload: { clip: selectedFile, tags: tags, title: clipTitle }
       });
+      goToSoundboard();
     // };
   };
 

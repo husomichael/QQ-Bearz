@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button  } from '@mui/material';
 
 // var audio = new Audio("soundfile.wav");
@@ -10,7 +11,15 @@ import { Box, Typography, Button  } from '@mui/material';
 
 function Soundboard() {
 
+  const dispatch = useDispatch();
   const history = useHistory();
+  const soundclips = useSelector((store) => store.soundclips);
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_SOUND_CLIPS'
+    })
+  }, []);
 
   function goToAddSoundClip(){
     history.push('/addsoundclip');

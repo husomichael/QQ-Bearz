@@ -11,6 +11,7 @@ function* addSoundClip(action){
     soundClip.append('soundclip', action.payload.clip);
     soundClip.append('title', action.payload.title);
     soundClip.append('tags', action.payload.tags);
+    //Probably need a one to many tags table.
     const response = yield axios({
       method: 'POST',
       url: `/api/soundclips/`,
@@ -29,14 +30,14 @@ function* fetchSoundClips(action){
   try{
     const response = yield axios({
       method: 'GET',
-      url: `/api/soundclips/${action.payload}`,
+      url: `/api/soundclips`,
     })
     yield put({
       type: 'SET_SOUND_CLIPS',
       payload: response.data
     })
   }catch(error){
-    console.log('fetchPhotos catch error:', error);
+    console.log('fetchSoundClips catch error:', error);
   };
 };
 
@@ -51,7 +52,7 @@ function* deleteSoundClip(action){
       payload: response.data
     })
   }catch(error){
-    console.log('fetchPhotos catch error:', error);
+    console.log('deleteSoundClip catch error:', error);
   };
 };
 
