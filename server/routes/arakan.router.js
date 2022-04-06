@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const cloudinaryUpload = require('../modules/cloudinary-config-arakan.js');
 
-// POSTs a new image to the DB
+// POSTs a new image to cloudinary and then the DB
 router.post('/', rejectUnauthenticated, cloudinaryUpload.single('image'), async (req, res) => {
   console.log('req.file:', req.file);
   const imageUrl = req.file.path;

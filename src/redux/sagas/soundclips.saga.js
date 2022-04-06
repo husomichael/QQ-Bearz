@@ -9,6 +9,8 @@ function* addSoundClip(action){
     };
     const soundClip = new FormData();
     soundClip.append('soundclip', action.payload.clip);
+    soundClip.append('title', action.payload.title);
+    soundClip.append('tags', action.payload.tags);
     const response = yield axios({
       method: 'POST',
       url: `/api/soundclips/`,

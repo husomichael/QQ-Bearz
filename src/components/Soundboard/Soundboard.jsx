@@ -2,6 +2,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Typography, Button  } from '@mui/material';
 
+// var audio = new Audio("soundfile.wav");
+
+// document.onclick = function() {
+//   audio.play();
+// }
+
 function Soundboard() {
 
   const history = useHistory();
