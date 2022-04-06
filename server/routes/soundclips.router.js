@@ -28,6 +28,18 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
     });
 });
 
-
+router.get('/', rejectUnauthenticated, (req, res) => {
+  const sqlText =  `
+    SELECT * FROM "soundclips"
+  `;
+  pool.query(sqlText, [])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((dbErr) => {
+      console.log('/soundclips GET err:', dbErr);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

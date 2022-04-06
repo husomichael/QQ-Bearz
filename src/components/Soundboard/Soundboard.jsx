@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Typography, Button  } from '@mui/material';
-
-// var audio = new Audio("soundfile.wav");
-
-// document.onclick = function() {
-//   audio.play();
-// }
+import { Box, Typography, Button, Grid  } from '@mui/material';
+import SoundboardItem from '../SoundboardItem/SoundboardItem.jsx';
 
 function Soundboard() {
 
@@ -48,6 +43,15 @@ function Soundboard() {
           Add New SoundClip
         </Button>
       </Box>
+      <Grid container spacing={1} maxHeight="88%" mt={4} sx={{padding: '10px'}}>
+        {soundclips.map((soundclip) =>{
+          return(
+            <Grid item xs={4} key={soundclip.id}>
+              <SoundboardItem soundclip={soundclip} />
+            </Grid>
+          )
+        })}
+      </Grid>
     </div>
   );
 };

@@ -29,8 +29,8 @@ router.get('/', rejectUnauthenticated, (req, res) =>{
   const sqlText = `
     SELECT * FROM "arakan_deaths"
   `;
-  const sqlValues = '';
-  pool.query(sqlText, sqlValues)
+  // const sqlValues = '';
+  pool.query(sqlText, [])
     .then((dbRes) => {
       res.send(dbRes.rows);
     })
