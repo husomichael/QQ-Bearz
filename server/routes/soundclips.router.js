@@ -17,6 +17,8 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
     VALUES
     ($1, $2, $3, $4, $5);
   `;
+
+  
   const sqlValues = [req.user.id, soundclipTitle, soundclipTags, soundclipUrl, req.user.username];
   pool.query(sqlText, sqlValues)
     .then((dbRes) =>{

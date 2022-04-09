@@ -38,7 +38,9 @@ function SoundboardItem({soundclip}) {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      sx={{mt: 1}}
+      backgroundColor="hotpink"
+      sx={{mt: 1, pb: 3, pt: 3, mr: 6, cursor: 'pointer'}}
+      onClick={handlePlay}
     >
       {/* <Card sx={{ maxWidth: '100%', boxshadow: 3 }}>
         <CardActionArea>
@@ -74,7 +76,7 @@ function SoundboardItem({soundclip}) {
         <MenuItem onClick={handleDeleteButton}>Delete</MenuItem>
         <MenuItem onClick={handleClose}>Cancel</MenuItem>
       </Menu> */}
-      <Typography onClick={handlePlay}>
+      <Typography>
         {soundclip.title}
 
       </Typography>
