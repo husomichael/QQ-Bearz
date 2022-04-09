@@ -47,11 +47,11 @@ function AddSoundClip() {
     const { key } = e;
     const trimmedInput = input.trim();
   
-    if ((key === ',' || key === 'Enter') && trimmedInput.length && !tags.includes(trimmedInput)) {
+    if((key === ',' || key === 'Enter') && trimmedInput.length && !tags.includes(trimmedInput)) {
       e.preventDefault();
       setTags(prevState => [...prevState, trimmedInput]);
       setInput('');
-    }
+    };
   
     if (key === "Backspace" && !input.length && tags.length && isKeyReleased) {
       const tagsCopy = [...tags];
@@ -59,8 +59,7 @@ function AddSoundClip() {
       e.preventDefault();
       setTags(tagsCopy);
       setInput(poppedTag);
-    }
-  
+    };
     setIsKeyReleased(false);
   };
   
@@ -94,7 +93,7 @@ function AddSoundClip() {
         sx={{mt: 3}}
       >
         <TextField
-          placeholder="Add a Title"
+          placeholder="Add a title..."
           value={clipTitle}
           onChange={handleClipTitle}
           sx={{
@@ -117,7 +116,7 @@ function AddSoundClip() {
           ))}
           <input
             value={input}
-            placeholder="Enter a tag"
+            placeholder="Add a tag..."
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}
             onChange={onChange}
