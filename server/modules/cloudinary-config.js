@@ -14,7 +14,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "Soundboard",
-    resource_type: "video"
+    resource_type: "video",
+    quality_analysis: "true",
   },
 });
 

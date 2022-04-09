@@ -4,6 +4,7 @@ import user from './user.reducer';
 import arakan from './arakan.reducer';
 import arakandeaths from './arakandeaths.reducer';
 import soundclips from './soundclips.reducer';
+import tags from './tags.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   arakan, //arakan death photos and counter
   arakandeaths, //arakan death counter reducer
   soundclips, //soundclips reducer
+  tags, //soundclips tags reducer
 });
 
 export default rootReducer;

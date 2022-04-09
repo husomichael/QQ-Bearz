@@ -9,17 +9,29 @@ function Soundboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const soundclips = useSelector((store) => store.soundclips);
+  const tags = useSelector((store) => store.tags);
 
   useEffect(() => {
-    dispatch({
-      type: 'FETCH_SOUND_CLIPS'
-    })
+    fetchSoundClips();
+    fetchTags();
   }, []);
 
   function goToAddSoundClip(){
     history.push('/addsoundclip');
   };
 
+  function fetchSoundClips(){
+    dispatch({
+      type: 'FETCH_SOUND_CLIPS'
+    });
+  };
+
+  function fetchTags(){
+    dispatch({
+      type: 'FETCH_TAGS'
+    });
+  };
+  
   return (
     <div>
       <Box

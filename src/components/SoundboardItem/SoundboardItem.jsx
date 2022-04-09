@@ -8,8 +8,18 @@ function SoundboardItem({soundclip}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   var audio = new Audio(`${soundclip.url}`);
+  
+  console.log(audio);
 
-  console.log('soundclip:', soundclip);
+  // const { getAudioDurationInSeconds } = require('get-audio-duration');
+  // // From a readable stream...
+
+  // const fs = require('fs');
+  // const stream = fs.createReadStream(soundclip.url);
+
+  // getAudioDurationInSeconds(stream).then((duration) => {
+  //   console.log(duration);
+  // });
 
   // when a soundclip is clicked and delete is chosen it will dispatch the delete request
   function handleDeleteButton(){

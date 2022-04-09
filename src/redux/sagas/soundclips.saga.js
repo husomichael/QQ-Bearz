@@ -49,10 +49,24 @@ function* deleteSoundClip(action){
     })
     yield put({
       type: 'FETCH_SOUND_CLIPS',
-      payload: response.data
     })
   }catch(error){
     console.log('deleteSoundClip catch error:', error);
+  };
+};
+
+function* fetchTags(action){
+  try{
+    const response = yield axios({
+      method: 'GET',
+      url: `/api/soundclips/tags`,
+    })
+    yield put({
+      type: 'SET_TAGS',
+      payload: response.data
+    })
+  }catch(error){
+    console.log('fetchTags catch error:', error);
   };
 };
 
@@ -60,6 +74,7 @@ function* soundClipsSaga(){
   yield takeEvery('ADD_SOUND_CLIP', addSoundClip);
   yield takeEvery('FETCH_SOUND_CLIPS', fetchSoundClips);
   yield takeEvery('DELETE_SOUND_CLIP', deleteSoundClip);
+  yield takeEvery('FETCH_TAGS', fetchTags);
 };
 
 export default soundClipsSaga;

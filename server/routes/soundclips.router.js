@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const cloudinaryUpload = require('../modules/cloudinary-config');
 
-// POSTs a new soundclip to cloudinary and then the DB
+// POSTs a new soundclip to cloudinary and then the DB, then posts related tags to the tags table.
 router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), async (req, res) => {
   console.log('req.file:', req.file);
   const soundclipUrl = req.file.path;
@@ -72,6 +72,20 @@ router.get('/', rejectUnauthenticated, (req, res) => {
       console.log('/soundclips GET err:', dbErr);
       res.sendStatus(500);
     });
+});
+
+router.get('/tags', rejectUnauthenticated, (req, res) => {
+  const sqlText = `
+    SELECT * FROM "tags";
+  `;
+  pool.query(sqlText, [])
+    .then((dbRes) => {
+      res.send(dbRes.rows);
+    })
+    .catch((dbErr) => {
+      console.log('/soundclips/tags GET err:', dbErr);
+      res.sendStatus(500);
+    })
 });
 
 module.exports = router;
