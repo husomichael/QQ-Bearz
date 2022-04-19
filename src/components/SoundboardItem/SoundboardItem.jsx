@@ -46,7 +46,7 @@ function SoundboardItem({soundclip}) {
 
   return (
     <Card
-      sx={{mt: 1, pb: 3, pt: 3, mr: 6, cursor: 'pointer', width: '200px'}}
+      sx={{mt: 1, pb: 3, pt: 3, mr: 6, cursor: 'pointer', width: '170px', height: '130px'}}
       onClick={handlePlay}
     >
       {/* <Card sx={{ maxWidth: '100%', boxshadow: 3 }}>
@@ -85,7 +85,7 @@ function SoundboardItem({soundclip}) {
       </Menu> */}
       <CardContent sx={{textAlign: 'center'}}>
         <VolumeUpIcon />
-        <Typography variant='h6'>
+        <Typography variant='h6' sx={{ maxWidth: '140px'}}>
           {soundclip.title}
         </Typography>
         <Typography sx={{fontStyle: 'italic', fontWeight: 'light', fontSize: '10px', pt: 2}}>

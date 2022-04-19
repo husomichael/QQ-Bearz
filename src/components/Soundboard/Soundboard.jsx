@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button, Grid, Dialog, DialogTitle, DialogActions  } from '@mui/material';
 import SoundboardItem from '../SoundboardItem/SoundboardItem.jsx';
 import AddSoundClipModal from '../AddSoundClipModal/AddSoundClipModal.jsx';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 function Soundboard() {
 
@@ -63,7 +64,7 @@ function Soundboard() {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography variant="h2">
+        <Typography variant="h5">
           Soundboard
         </Typography>
       </Box>
@@ -75,14 +76,15 @@ function Soundboard() {
       >
         <Button 
         variant="contained"
+        sx={{width: '150px'}}
         onClick={goToAddSoundClip}>
-          Add New SoundClip
+          <AddCircleOutlineOutlinedIcon fontSize="small" sx={{mr: 1}}/> Add a Clip
         </Button>
       </Box>
-      <Grid container mt={4}>
+      <Grid container spacing={1} sx={{ mt:5}}>
         {soundclips.map((soundclip) =>{
           return(
-            <Grid item lg={3} key={soundclip.id}>
+            <Grid item xs={2} key={soundclip.id}>
               <SoundboardItem soundclip={soundclip} />
             </Grid>
           )
