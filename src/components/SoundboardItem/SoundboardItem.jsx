@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, Card, CardActionArea, CardMedia, MenuItem, Menu, Typography} from '@mui/material';
+import { Box, Card, CardContent, CardActionArea, CardMedia, MenuItem, Menu, Typography, Paper} from '@mui/material';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 
 function SoundboardItem({soundclip}) {
 
@@ -44,12 +45,8 @@ function SoundboardItem({soundclip}) {
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="hotpink"
-      sx={{mt: 1, pb: 3, pt: 3, mr: 6, cursor: 'pointer'}}
+    <Card
+      sx={{mt: 1, pb: 3, pt: 3, mr: 6, cursor: 'pointer', width: '200px'}}
       onClick={handlePlay}
     >
       {/* <Card sx={{ maxWidth: '100%', boxshadow: 3 }}>
@@ -86,11 +83,16 @@ function SoundboardItem({soundclip}) {
         <MenuItem onClick={handleDeleteButton}>Delete</MenuItem>
         <MenuItem onClick={handleClose}>Cancel</MenuItem>
       </Menu> */}
-      <Typography>
-        {soundclip.title}
-
-      </Typography>
-    </Box>
+      <CardContent sx={{textAlign: 'center'}}>
+        <VolumeUpIcon />
+        <Typography variant='h6'>
+          {soundclip.title}
+        </Typography>
+        <Typography sx={{fontStyle: 'italic', fontWeight: 'light', fontSize: '10px', pt: 2}}>
+          Uploaded by: {soundclip.username}
+        </Typography>
+      </CardContent>
+    </Card>
   )
 };
 

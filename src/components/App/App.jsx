@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Container } from '@mui/material';
 import {
   HashRouter as Router,
   Redirect,
@@ -37,6 +38,7 @@ function App() {
   }, [dispatch]);
 
   return (
+    <Container>
     <Router>
       <div>
         <Nav />
@@ -153,6 +155,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </Container>
   );
 }
 

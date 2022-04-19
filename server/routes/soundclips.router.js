@@ -6,7 +6,7 @@ const cloudinaryUpload = require('../modules/cloudinary-config');
 const { getAudioDurationInSeconds } = require('get-audio-duration');
 const fs = require('fs')
 
-// POSTs a new soundclip to cloudinary and then the DB, then posts related tags to the tags table.
+// POSTs a new soundclip to cloudinary and then the DB, then inserts related tags to the tags table.
 router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), async (req, res) => {
   console.log('req.file:', req.file);
   const soundclipUrl = req.file.path;
@@ -23,19 +23,17 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
   `;
   const sqlValues = [req.user.id, soundclipTitle, soundclipUrl, req.user.username];
   pool.query(sqlText, sqlValues)
-    .then((dbRes) =>{
+    .then((dbRes) => {
       let sqlText2 = `
             INSERT INTO "tags"
-            ("user_id", "soundclip_id", "username", "tag")
+            ("soundclip_id", "tag")
             VALUES 
       `;
       let sqlValues2 = [
-        req.user.id, // $1
-        dbRes.rows[0].id, // $2
-        req.user.username, // $3
+        dbRes.rows[0].id, // $1
       ];
       for (let i = 0; i < tagsArray.length; i++) {
-        sqlText2 += `($1, $2, $3, $${i + 4})`;
+        sqlText2 += `($1, $${i + 2})`;
         sqlValues2.push(tagsArray[i]);
         // If its the last ingredient being entered, add semicolon to end SQL query,
         // Otherwise add ', ' before concatenating next values
@@ -48,13 +46,13 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
       console.log('sqlText2:', sqlText2);
       console.log('sqlValues2:', sqlValues2);
       pool.query(sqlText2, sqlValues2)
-      .then((dbRes) =>{
-        res.sendStatus(200);
-      })
-      .catch((dbErr) =>{
-        console.log('/soundclips POST tags nested error:', dbErr);
-        res.sendStatus(500);
-      })
+        .then((dbRes) => {
+          res.sendStatus(200);
+        })
+        .catch((dbErr) => {
+          console.log('/soundclips POST tags nested error:', dbErr);
+          res.sendStatus(500);
+        })
     })
     .catch((dbErr) => {
       console.log('/soundclips POST error:', dbErr);
@@ -63,7 +61,7 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
 });
 
 router.get('/', rejectUnauthenticated, (req, res) => {
-  const sqlText =  `
+  const sqlText = `
     SELECT * FROM "soundclips";
   `;
   pool.query(sqlText, [])

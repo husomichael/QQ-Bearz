@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Typography, Button, Grid  } from '@mui/material';
+import { Box, Typography, Button, Grid, Dialog, DialogTitle, DialogActions  } from '@mui/material';
 import SoundboardItem from '../SoundboardItem/SoundboardItem.jsx';
+import AddSoundClipModal from '../AddSoundClipModal/AddSoundClipModal.jsx';
 
 function Soundboard() {
 
   const dispatch = useDispatch();
   const history = useHistory();
   const soundclips = useSelector((store) => store.soundclips);
-  const tags = useSelector((store) => store.tags);
+  // const tags = useSelector((store) => store.tags);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     fetchSoundClips();
@@ -19,6 +21,28 @@ function Soundboard() {
   function goToAddSoundClip(){
     history.push('/addsoundclip');
   };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // function goToAddSoundClip(){
+  //   return(
+  //     <div>
+  //       <Dialog open={open} onClose={handleClose}>
+  //         <DialogTitle>Test</DialogTitle>
+  //         <DialogActions>
+  //         <Button onClick={handleClose}>Cancel</Button>
+  //         <Button onClick={handleClose}>Subscribe</Button>
+  //       </DialogActions>
+  //       </Dialog>
+  //     </div>
+  //   )
+  // };
 
   function fetchSoundClips(){
     dispatch({
@@ -31,7 +55,7 @@ function Soundboard() {
       type: 'FETCH_TAGS'
     });
   };
-  
+
   return (
     <div>
       <Box
@@ -40,7 +64,7 @@ function Soundboard() {
         alignItems="center"
       >
         <Typography variant="h2">
-          QQ Soundboard
+          Soundboard
         </Typography>
       </Box>
       <Box
@@ -55,10 +79,10 @@ function Soundboard() {
           Add New SoundClip
         </Button>
       </Box>
-      <Grid container spacing={1} maxHeight="88%" mt={4} sx={{padding: '10px'}}>
+      <Grid container mt={4}>
         {soundclips.map((soundclip) =>{
           return(
-            <Grid item xs={4} key={soundclip.id}>
+            <Grid item lg={3} key={soundclip.id}>
               <SoundboardItem soundclip={soundclip} />
             </Grid>
           )
