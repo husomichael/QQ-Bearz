@@ -1,16 +1,54 @@
-// import React, { useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { Dialog } from '@mui/material';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-// function AddSoundClipModal(){
-//   return(
-//     <div>
-//       <Dialog>
-//         <DialogTitle>Test</DialogTitle>
-//       </Dialog>
-//     </div>
-//   )
-// };
+function AddSoundClipModal() {
+  const [open, setOpen] = React.useState(false);
 
-// export default AddSoundClipModal;
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Open form dialog
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <TextField
+            required
+            id="outlined-required"
+            label="Required"
+            defaultValue="Hello World"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Subscribe</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
+export default AddSoundClipModal

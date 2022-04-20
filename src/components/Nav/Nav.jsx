@@ -40,13 +40,9 @@ function Nav() {
               Arakan Deaths
             </Link>
 
-            <LogOutButton className="navLink" />
+            <LogOutButton className="navLinkLogout" />
           </>
         )}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
       </div>
     </div>
   );
