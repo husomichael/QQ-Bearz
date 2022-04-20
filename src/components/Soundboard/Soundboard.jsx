@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, FormControl, Stack, TextField, Typography, Button, Grid, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText  } from '@mui/material';
+import { Box, Alert, FormControl, Stack, TextField, Typography, Button, Grid, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText  } from '@mui/material';
 import SoundboardItem from '../SoundboardItem/SoundboardItem.jsx';
 import AddSoundClipModal from '../AddSoundClipModal/AddSoundClipModal.jsx';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { Cancel, Tag } from "@mui/icons-material";
 import { DropzoneArea } from 'material-ui-dropzone';
+import { useDropzone } from 'react-dropzone'
+
+import toast from 'react-hot-toast';
 import './Soundboard.css';
 
 function Soundboard() {
@@ -15,17 +18,49 @@ function Soundboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const soundclips = useSelector((store) => store.soundclips);
-  // const tags = useSelector((store) => store.tags);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState('');
 
   useEffect(() => {
     fetchSoundClips();
     fetchTags();
   }, []);
 
-  // function goToAddSoundClip(){
-  //   history.push('/addsoundclip');
-  // };
+  //////////////////// DROPZONE /////////////////////
+  
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the files
+  }, [])
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+  function handleSelectedMp3(){
+    if(selectedFile != ''){
+      return(
+        <Typography textAlign="center" sx={{mt:1, mb:1, color: '#38AEE5'}}>
+          {`${selectedFile.name} selected.`}
+        </Typography>
+      )
+    }else{
+      return(
+        <Typography textAlign="center" sx={{mt:1, mb:1, color: '#black'}}>
+          {`No file selected.`}
+        </Typography>
+      )
+    }
+  };
+
+  // const onDrop = useCallback(acceptedFiles => {
+  //   alert(acceptedFiles[0].name)
+  //   console.log("Now you can do anything with"+
+  //         " this file as per your requirement")
+  // }, [])
+  
+  // const { getInputProps, getRootProps } = useDropzone({ onDrop })
+
+  //////////////////// END DROPZONE /////////////////////
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   //////////////////// TAGS /////////////////////////
 
@@ -41,6 +76,11 @@ function Soundboard() {
     e.preventDefault();
     SetTags([...tags, tagRef.current.value]);
     tagRef.current.value = "";
+  };
+
+  const handleSelectFile = (e) => {
+    setSelectedFile(e.target.files[0]);
+    console.log(selectedFile);
   };
 
   const Tags = ({ data, handleDelete }) => {
@@ -72,12 +112,19 @@ function Soundboard() {
 
   //////////////////// END TAGS /////////////////////////
 
+  function handleClipTitle(e){
+    setClipTitle(e.target.value);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
+    toast.success(`Hellooooo`)
   };
 
   const handleClose = () => {
     setOpen(false);
+    console.log('selectedFile:', selectedFile);
+    toast.success(`Mp3 Uploaded!`);
   };
 
   function goToAddSoundClip(){
@@ -173,14 +220,50 @@ function Soundboard() {
               />
             </form>
           </Box>
-          <DropzoneArea
-            className="dropzone"
-            onChange={(files) => console.log('Files:', files)}
+          {/* <DropzoneArea
+            acceptedFiles={['audio/*']}
+            dropzoneText={"Drag and Drop Here or Browse Files"}
+            filesLimit={1}
+            maxFileSize={2097152}
+            showPreviewsInDropzone={true}
+            showAlerts={true}
+            cancelButtonText={"cancel"}
+            submitButtonText={"submit"}
+            onChange={(files) => setSelectedFile(files)}
+          /> */}
+          {/*  //////////////////////////////////////// */}
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{mt: 5, mb: 5}}
+          >
+          <input
+            accept="audio/mp3"
+            type="file"
+            id="select-mp3"
+            style={{ display: 'none' }}
+            onChange={e => setSelectedFile(e.target.files[0])}
           />
+          <label htmlFor="select-mp3">
+            <Button sx={{pt: 10, pb: 10, pr: 21, pl: 21, border: '2px dashed', borderColor: '#EEEEEE', color: '#89CFF0'}} variant="outlined" color="primary" component="span">
+              Select mp3 to upload
+            </Button>
+          </label>
+          </Box>
+          {handleSelectedMp3()}
+          {/* <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            {
+              isDragActive ?
+                <p>Drop the files here ...</p> :
+                <p>Drag 'n' drop some files here, or click to select files</p>
+            }
+          </div> */}
         </DialogContent>
         <DialogActions sx={{mr: '25%', ml: '25%'}}>
-          <Button sx={{pl: 7, pr: 7}} variant="contained" color="error" onClick={handleClose}>Cancel</Button>
-          <Button sx={{pl: 7, pr: 7}} variant="contained" onClick={handleClose}>Upload</Button>
+          <Button sx={{pl: 7, pr: 7, mb: 4}} variant="contained" color="error" onClick={handleClose}>Cancel</Button>
+          <Button sx={{pl: 7, pr: 7, mb: 4}} variant="contained" onClick={handleClose}>Upload</Button>
         </DialogActions>
       </Dialog>
     </div>

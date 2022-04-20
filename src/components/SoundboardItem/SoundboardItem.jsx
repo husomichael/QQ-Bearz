@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Card, CardContent, CardActionArea, CardMedia, MenuItem, Menu, Typography, Paper} from '@mui/material';
+import { Box, Tooltip, Card, CardContent, CardActionArea, CardMedia, MenuItem, Menu, Typography, Paper} from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlinedIcon from '@mui/icons-material';
 
 function SoundboardItem({soundclip}) {
 
@@ -55,21 +56,24 @@ function SoundboardItem({soundclip}) {
   };
 
   return (
-    <Card
-      sx={{mt: .5, pb: 3, pt: 3, width: '170px', height: '130px'}}
-    >
-      <CardContent sx={{textAlign: 'center'}}>
-        <VolumeUpIcon onClick={handlePlay} sx={{cursor: 'pointer', mb: 1}}/>
-        <br />
-        <Typography variant='h7' sx={{ maxWidth: '140px'}}>
-          {soundclip.title}
-        </Typography>
-        <Typography sx={{fontStyle: 'italic', fontWeight: 'light', fontSize: '10px', pt: 2}}>
-          Uploaded by: {soundclip.username}
-        </Typography>
-        {handleTrash()}
-      </CardContent>
-    </Card>
+    <Tooltip title={`Uploaded by: ${soundclip.username}`} placement="top">
+      <Card
+        sx={{mt: .5, pb: 3, pt: 3, width: '170px', height: '130px'}}
+      >
+        <CardContent display="flex" justifyContent="center" alignItems="center" sx={{textAlign: 'center'}}>
+          <VolumeUpIcon fontSize="medium" onClick={handlePlay} sx={{cursor: 'pointer', mb: 1}}/>
+          <br />
+          <Typography variant='h7' sx={{ maxWidth: '140px'}}>
+            {soundclip.title}
+          </Typography>
+          <br />
+          {/* <Typography sx={{fontStyle: 'italic', fontWeight: 'light', fontSize: '10px', pt: 2}}>
+            Uploaded by: {soundclip.username}
+          </Typography> */}
+          {handleTrash()}
+        </CardContent>
+      </Card>
+    </Tooltip>
   )
 };
 
