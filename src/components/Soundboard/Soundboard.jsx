@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, TextField, Typography, Button, Grid, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText  } from '@mui/material';
+import { Box, FormControl, Stack, TextField, Typography, Button, Grid, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText  } from '@mui/material';
 import SoundboardItem from '../SoundboardItem/SoundboardItem.jsx';
 import AddSoundClipModal from '../AddSoundClipModal/AddSoundClipModal.jsx';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import { Cancel, Tag } from "@mui/icons-material";
+import { DropzoneArea } from 'material-ui-dropzone';
+import './Soundboard.css';
 
 function Soundboard() {
 
@@ -23,6 +26,51 @@ function Soundboard() {
   // function goToAddSoundClip(){
   //   history.push('/addsoundclip');
   // };
+
+  //////////////////// TAGS /////////////////////////
+
+  const [tags, SetTags] = useState([]);
+  const tagRef = useRef();
+
+  const handleDelete = (value) => {
+    const newtags = tags.filter((val) => val !== value);
+    SetTags(newtags);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    SetTags([...tags, tagRef.current.value]);
+    tagRef.current.value = "";
+  };
+
+  const Tags = ({ data, handleDelete }) => {
+    return (
+      <Box
+        sx={{
+          background: "#283240",
+          height: "100%",
+          display: "flex",
+          padding: "0.4rem",
+          margin: "0 0.5rem 0 0",
+          justifyContent: "center",
+          alignContent: "center",
+          color: "#ffffff",
+        }}
+      >
+        <Stack direction='row' gap={1}>
+          <Typography>{data}</Typography>
+          <Cancel
+            sx={{ cursor: "pointer" }}
+            onClick={() => {
+              handleDelete(data);
+            }}
+          />
+        </Stack>
+      </Box>
+    );
+  };
+
+  //////////////////// END TAGS /////////////////////////
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -88,34 +136,51 @@ function Soundboard() {
       onClose={handleClose}
       sx={{}}>
         <DialogTitle display="flex">
-          <VolumeUpIcon size="small" sx={{color: 'blue', pr: 1}} />
-          <Typography sx={{mt: .3}}>
+          <VolumeUpIcon size="small" sx={{color: 'blue', pr: 1, mt: 2}} />
+          <Typography sx={{pt: 2.2}}>
             Add to Soundboard
           </Typography>
         </DialogTitle>
         <DialogContent>
           <TextField
-            sx={{mt: 1, width: '90%'}}
-            required
-            id="outlined-required"
-            label="Add a Title"
-            inputProps={{
-              maxlength: 28
-            }}
-          />
-          <TextField
-            sx={{mt: 1, width: '90%'}}
-            required
-            id="outlined-required"
-            label="Add a Title"
-            inputProps={{
-              maxlength: 28
-            }}
+          sx={{mt: 2, width: '100%'}}
+          required
+          id="standard-required"
+          label="Add a Title"
+          variant="standard"
+        />
+          <Box sx={{ flexGrow: 1, mt: 2, mb: 5 }}>
+            <form onSubmit={handleOnSubmit}>
+              <TextField
+                inputRef={tagRef}
+                fullWidth
+                variant='standard'
+                size='small'
+                sx={{ margin: "1rem 0" }}
+                margin='none'
+                placeholder={tags.length < 5 ? "Enter tags" : ""}
+                InputProps={{
+                  startAdornment: (
+                    <Box sx={{ margin: "0 0.2rem 0 0", display: "flex" }}>
+                      {tags.map((data, index) => {
+                        return (
+                          <Tags data={data} handleDelete={handleDelete} key={index} />
+                        );
+                      })}
+                    </Box>
+                  ),
+                }}
+              />
+            </form>
+          </Box>
+          <DropzoneArea
+            className="dropzone"
+            onChange={(files) => console.log('Files:', files)}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+        <DialogActions sx={{mr: '25%', ml: '25%'}}>
+          <Button sx={{pl: 7, pr: 7}} variant="contained" color="error" onClick={handleClose}>Cancel</Button>
+          <Button sx={{pl: 7, pr: 7}} variant="contained" onClick={handleClose}>Upload</Button>
         </DialogActions>
       </Dialog>
     </div>
