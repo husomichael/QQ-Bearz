@@ -25,6 +25,8 @@ import AddSoundClip from '../AddSoundClip/AddSoundClip.jsx';
 import ArakanDeathCounter from '../ArakanDeathCounter/ArakanDeathCounter.jsx';
 import AddCorpsePhoto from '../AddCorpsePhoto/AddCorpsePhoto.jsx';
 import UserProfile from '../UserProfile/UserProfile.jsx';
+import RequestAccess from '../RequestAccess/RequestAccess.jsx';
+import GrantAccess from '../GrantAccess/GrantAccess.jsx';
 
 import './App.css';
 
@@ -146,6 +148,18 @@ function App() {
             path="/userprofile"
           >
             <UserProfile />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/grantaccess"
+          >
+            <GrantAccess />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/requestaccess"
+          >
+            <RequestAccess />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
