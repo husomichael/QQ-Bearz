@@ -67,12 +67,24 @@ router.put('/soundboardrequest', rejectUnauthenticated, (req, res) => {
 //Get users for admin view
 router.get('/admin', rejectUnauthenticated, (req, res) => {
   console.log(req.user);
-  if(req.user.access > 2){
+  if(req.user.access == 3){
     const queryText = `
       SELECT "id", "username", "access", "soundboard_access" FROM "user"
-      WHERE "access"<$1
+      WHERE "access"<$1;
     `;
     pool.query(queryText, [3])
+      .then((dbRes) => {
+        res.send(dbRes.rows);
+      })
+      .catch((dbErr) => {
+        console.log('/user/admin GET error:', dbErr);
+      })
+  }else if(req.user.access == 4){
+    const queryText = `
+      SELECT "id", "username", "access", "soundboard_access" FROM "user"
+      WHERE "access"<$1;
+    `;
+    pool.query(queryText, [4])
       .then((dbRes) => {
         res.send(dbRes.rows);
       })

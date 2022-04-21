@@ -38,9 +38,24 @@ function* submitSoundboardRequest() {
   };
 };
 
+function* fetchUsers(){
+  try{
+    const response = yield axios({
+      method: 'GET',
+      url: `/api/user/admin`
+    })
+    yield put({
+      type: 'SET_USERS'
+    })
+  }catch(error){
+    console.log('fetchUsers catch error:', error);
+  };
+};
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('SUBMIT_SOUNDBOARD_REQUEST', submitSoundboardRequest)
+  yield takeLatest('FETCH_USERS', fetchUsers);
 }
 
 export default userSaga;
