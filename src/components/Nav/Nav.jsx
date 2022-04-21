@@ -28,6 +28,11 @@ function Nav() {
           </Link>
         )}
         {/* If user is an admin, show soundboard requests. */}
+        {user.id && user.access > 2 && (
+          <Link className="navLink" to="/grantaccess">
+            Access Requests
+          </Link>
+        )}
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>

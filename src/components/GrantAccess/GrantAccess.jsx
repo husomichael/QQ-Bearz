@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button } from '@mui/material'
 
-function RequestAccess() {
+function GrantAccess() {
 
   return (
     <div>
-      Request Access Page
+      Grant Access Page
     </div>
   );
 };
 
-export default RequestAccess;
+export default GrantAccess;
