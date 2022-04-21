@@ -20,47 +20,12 @@ function Soundboard() {
   const soundclips = useSelector((store) => store.soundclips);
   const [open, setOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState('');
+  const [clipTitle, setClipTitle] = useState('');
 
   useEffect(() => {
     fetchSoundClips();
     fetchTags();
   }, []);
-
-  //////////////////// DROPZONE /////////////////////
-  
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, [])
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
-  function handleSelectedMp3(){
-    if(selectedFile != ''){
-      return(
-        <Typography textAlign="center" sx={{mt:1, mb:1, color: '#38AEE5'}}>
-          {`${selectedFile.name} selected.`}
-        </Typography>
-      )
-    }else{
-      return(
-        <Typography textAlign="center" sx={{mt:1, mb:1, color: '#black'}}>
-          {`No file selected.`}
-        </Typography>
-      )
-    }
-  };
-
-  // const onDrop = useCallback(acceptedFiles => {
-  //   alert(acceptedFiles[0].name)
-  //   console.log("Now you can do anything with"+
-  //         " this file as per your requirement")
-  // }, [])
-  
-  // const { getInputProps, getRootProps } = useDropzone({ onDrop })
-
-  //////////////////// END DROPZONE /////////////////////
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
 
   //////////////////// TAGS /////////////////////////
 
@@ -112,19 +77,32 @@ function Soundboard() {
 
   //////////////////// END TAGS /////////////////////////
 
+  function handleSelectedMp3(){
+    if(selectedFile != ''){
+      return(
+        <Typography textAlign="center" sx={{mt:1, mb:1, color: '#38AEE5', fontWeight: ''}}>
+          {`${selectedFile.name} selected.`}
+        </Typography>
+      )
+    }else{
+      return(
+        <Typography textAlign="center" sx={{mt:1, mb:1, color: '#black'}}>
+          {`No file selected.`}
+        </Typography>
+      )
+    }
+  };
+
   function handleClipTitle(e){
     setClipTitle(e.target.value);
   };
 
   const handleClickOpen = () => {
     setOpen(true);
-    toast.success(`Hellooooo`)
   };
 
   const handleClose = () => {
     setOpen(false);
-    console.log('selectedFile:', selectedFile);
-    toast.success(`Mp3 Uploaded!`);
   };
 
   function goToAddSoundClip(){
@@ -141,6 +119,20 @@ function Soundboard() {
     dispatch({
       type: 'FETCH_TAGS'
     });
+  };
+
+  function handleSubmitMp3(){
+    if (selectedFile != '' && clipTitle != '') {
+      console.log('selectedFile:', selectedFile);
+      dispatch({
+        type: 'ADD_SOUND_CLIP',
+        payload: { clip: selectedFile, tags: tags, title: clipTitle }
+      });
+      handleClose();
+      setSelectedFile('');
+      SetTags([]);
+      setClipTitle('');
+    };
   };
 
   return (
@@ -195,6 +187,8 @@ function Soundboard() {
           id="standard-required"
           label="Add a Title"
           variant="standard"
+          value={clipTitle}
+          onChange={handleClipTitle}
         />
           <Box sx={{ flexGrow: 1, mt: 2, mb: 5 }}>
             <form onSubmit={handleOnSubmit}>
@@ -220,50 +214,43 @@ function Soundboard() {
               />
             </form>
           </Box>
-          {/* <DropzoneArea
-            acceptedFiles={['audio/*']}
-            dropzoneText={"Drag and Drop Here or Browse Files"}
-            filesLimit={1}
-            maxFileSize={2097152}
-            showPreviewsInDropzone={true}
-            showAlerts={true}
-            cancelButtonText={"cancel"}
-            submitButtonText={"submit"}
-            onChange={(files) => setSelectedFile(files)}
-          /> */}
-          {/*  //////////////////////////////////////// */}
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            sx={{mt: 5, mb: 5}}
+            sx={{mt: 5}}
+            >
+            <input
+              accept="audio/mp3"
+              type="file"
+              id="select-mp3"
+              style={{ display: 'none' }}
+              onChange={e => setSelectedFile(e.target.files[0])}
+            />
+            <label htmlFor="select-mp3">
+              <Button sx={{pt: 10, pb: 10, pr: 21, pl: 21, border: '2px dashed', borderColor: '#EEEEEE', color: '#89CFF0'}} variant="outlined" color="primary" component="span">
+                Select mp3 to upload
+              </Button>
+            </label>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{mb: 5}}
           >
-          <input
-            accept="audio/mp3"
-            type="file"
-            id="select-mp3"
-            style={{ display: 'none' }}
-            onChange={e => setSelectedFile(e.target.files[0])}
-          />
-          <label htmlFor="select-mp3">
-            <Button sx={{pt: 10, pb: 10, pr: 21, pl: 21, border: '2px dashed', borderColor: '#EEEEEE', color: '#89CFF0'}} variant="outlined" color="primary" component="span">
-              Select mp3 to upload
-            </Button>
-          </label>
+          <Typography sx={{color: "#D6D6D6", fontSize: "12px", mr: 18}}>
+            Accepted File Type: .mp3
+          </Typography>
+          <Typography sx={{color: "#D6D6D6", fontSize: "12px", ml: 18}}>
+            Max Size: 2mb
+          </Typography>
           </Box>
           {handleSelectedMp3()}
-          {/* <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            {
-              isDragActive ?
-                <p>Drop the files here ...</p> :
-                <p>Drag 'n' drop some files here, or click to select files</p>
-            }
-          </div> */}
         </DialogContent>
         <DialogActions sx={{mr: '25%', ml: '25%'}}>
           <Button sx={{pl: 7, pr: 7, mb: 4}} variant="contained" color="error" onClick={handleClose}>Cancel</Button>
-          <Button sx={{pl: 7, pr: 7, mb: 4}} variant="contained" onClick={handleClose}>Upload</Button>
+          <Button sx={{pl: 7, pr: 7, mb: 4}} variant="contained" onClick={handleSubmitMp3}>Upload</Button>
         </DialogActions>
       </Dialog>
     </div>

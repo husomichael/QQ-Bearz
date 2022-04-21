@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Tooltip, Card, CardContent, CardActionArea, CardMedia, MenuItem, Menu, Typography, Paper} from '@mui/material';
+import { Button, IconButton, Fade, Tooltip, Card, CardContent, CardActionArea, CardMedia, MenuItem, Menu, Typography, Paper} from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteOutlinedIcon from '@mui/icons-material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function SoundboardItem({soundclip}) {
 
@@ -11,47 +12,60 @@ function SoundboardItem({soundclip}) {
   // const [audioPlay, setAudioPlay] = useState(false);
   const user = useSelector((store) => store.user);
   var audio = new Audio(soundclip.url);
-  console.log('user:', user);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
-  // audio.onended = handleEnded;
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-  // let volumeIcon =  {color: 'blue'}
-
-  // function handleEnded(){
-  //   setAudioPlay(false);
-  // };
-
-  // function handleIcon(){
-  //   if(audioPlay == false){
-  //     return (
-  //       <VolumeUpIcon />
-  //     )
-  //   }else{
-  //     return (
-  //       <VolumeUpIcon sx={{color: 'blue'}}/>
-  //     )
-  //   };
-  // }
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   // when a soundclip is clicked and delete is chosen it will dispatch the delete request
   function handleDeleteButton(){
     console.log('delete');
     dispatch({
       type: 'DELETE_SOUND_CLIP',
-      payload: {id: soundclip.id}
+      payload: {id: soundclip.id, url: soundclip.url}
     })
-    toast.success(`Soundclip deleted!`);
+    handleClose();
   };
 
   function handlePlay(){
     audio.play();
   };
 
-  const handleTrash = () => {
+  const handleDeleteMenu = () => {
     //TODO: add admin conditional
     if(user.id == soundclip.user_id)
-    return (
-      <DeleteIcon fontSize="small" onClick={handleDeleteButton} sx={{ bottom: 0, pt: 1, color: 'red'}}/>
+    return(
+      <div>
+        <IconButton
+        aria-label="more"
+        id="fade-button"
+        aria-controls={open ? 'fade-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+        sx={{mt: 3}}
+      >
+        <MoreVertIcon />
+      </IconButton>
+        <Menu
+          id="fade-menu"
+          MenuListProps={{
+            'aria-labelledby': 'fade-button',
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          <MenuItem sx={{color: 'red'}} onClick={handleDeleteButton}>Delete</MenuItem>
+        </Menu>
+      </div>
     )
   };
 
@@ -61,7 +75,7 @@ function SoundboardItem({soundclip}) {
         sx={{mt: .5, pb: 3, pt: 3, width: '170px', height: '130px'}}
       >
         <CardContent display="flex" justifyContent="center" alignItems="center" sx={{textAlign: 'center'}}>
-          <VolumeUpIcon fontSize="medium" onClick={handlePlay} sx={{cursor: 'pointer', mb: 1}}/>
+          <VolumeUpIcon fontSize="medium" onClick={handlePlay} sx={{cursor: 'pointer', mb: 1.5, pr: 5, pl: 5}}/>
           <br />
           <Typography variant='h7' sx={{ maxWidth: '140px'}}>
             {soundclip.title}
@@ -70,7 +84,7 @@ function SoundboardItem({soundclip}) {
           {/* <Typography sx={{fontStyle: 'italic', fontWeight: 'light', fontSize: '10px', pt: 2}}>
             Uploaded by: {soundclip.username}
           </Typography> */}
-          {handleTrash()}
+          {handleDeleteMenu()}
         </CardContent>
       </Card>
     </Tooltip>
