@@ -21,6 +21,7 @@ import "./Soundboard.css";
 function Soundboard() {
   const dispatch = useDispatch();
   const soundclips = useSelector((store) => store.soundclips);
+  const user = useSelector((store) => store.user);
   const [open, setOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
   const [clipTitle, setClipTitle] = useState("");
@@ -153,21 +154,24 @@ function Soundboard() {
       >
         <Typography variant="h6">Soundboard</Typography>
       </Box>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ mt: 3, mb: 10 }}
-      >
-        <Button
-          variant="contained"
-          sx={{ width: "150px", height: "50px" }}
-          onClick={goToAddSoundClip}
+      {/* If user has been granted soundboard access, show Add Soundclip Button */}
+      {user.access > 1 && (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ mt: 3, mb: 10 }}
         >
-          <AddCircleOutlineOutlinedIcon fontSize="small" sx={{ mr: 1 }} /> Add a
-          Clip
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            sx={{ width: "150px", height: "50px" }}
+            onClick={goToAddSoundClip}
+          >
+            <AddCircleOutlineOutlinedIcon fontSize="small" sx={{ mr: 1 }} /> Add a
+            Clip
+          </Button>
+        </Box>
+      )}
       <Grid container spacing={1} sx={{ mt: 5, ml: 0.4 }}>
         {soundclips.map((soundclip) => {
           return (
