@@ -47,4 +47,21 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+// Handle access request for soundboard
+router.put('/soundboardrequest', rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    UPDATE "user"
+    SET "soundboard_access"=$1
+    WHERE "id"=$2;
+  `;
+  pool.query(queryText, [true, req.user.id])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((dbErr) => {
+      console.log('/user/soundboardrequest PUT error:', dbErr);
+      res.sendStatus(500);
+    })
+});
+
 module.exports = router;

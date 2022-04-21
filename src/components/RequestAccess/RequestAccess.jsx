@@ -18,12 +18,12 @@ function RequestAccess() {
   function requestAccessConditional() {
     if(user.access == 1){
       return(
-        <>
+        <Box>
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            sx={{ mt: 7 }}
+            sx={{mt: 15}}
           >
             <Typography variant="h4">
               Request Access
@@ -33,7 +33,7 @@ function RequestAccess() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            sx={{ mt: 9 }}
+            sx={{ mt: 15}}
           >
             <Typography variant="p" sx={{maxWidth: '500px', fontStyle: 'italic'}}>
               To access the ability to contribute to the soundboard by uploading soundclips, submit a request for access by clicking the button below.
@@ -60,12 +60,12 @@ function RequestAccess() {
             alignItems="center"
             sx={{ mt: 15 }}
           >
-            <Typography variant="h6" sx={{color: "success"}}>
+            <Typography variant="h5" sx={{color: "#388e3c"}}>
               Request Submitted!
             </Typography>
           </Box>
           )}
-        </>
+        </Box>
       )
     };
   };

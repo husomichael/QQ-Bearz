@@ -22,10 +22,25 @@ function* fetchUser() {
   } catch (error) {
     console.log('User get request failed', error);
   }
-}
+};
+
+function* submitSoundboardRequest() {
+  try{
+    const response = yield axios({
+      method: 'PUT',
+      url: `/api/user/soundboardrequest`
+    })
+    yield put({
+      type: 'FETCH_USER'
+    })
+  }catch(error){
+    console.log('submitSoundboardRequest catch error:', error);
+  };
+};
 
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('SUBMIT_SOUNDBOARD_REQUEST', submitSoundboardRequest)
 }
 
 export default userSaga;
