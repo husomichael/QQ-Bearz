@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const cloudinaryUpload = require('../modules/cloudinary-config');
 const { getAudioDurationInSeconds } = require('get-audio-duration');
-const fs = require('fs')
+const fs = require('fs');
 
 // POSTs a new soundclip to cloudinary and then the DB, then inserts related tags to the tags table.
 router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), async (req, res) => {
@@ -85,6 +85,39 @@ router.get('/tags', rejectUnauthenticated, (req, res) => {
     .catch((dbErr) => {
       console.log('/soundclips/tags GET err:', dbErr);
       res.sendStatus(500);
+    })
+});
+
+//TODO: Add admin conditional for delete.
+router.delete('/:id', rejectUnauthenticated, (req, res) =>{
+  const sqlText = `
+    SELECT * FROM "soundclips"
+    WHERE "id"=$1;
+  `;
+  pool.query(sqlText, [req.params.id])
+    .then((dbRes) => {
+      console.log('dbres:', dbRes.rows[0].user_id);
+      console.log(req.user.id);
+      //TODO GOES HERE...
+      if(dbRes.rows[0].user_id == req.user.id){
+        const sqlText2 = `
+          DELETE FROM "soundclips"
+          WHERE "id"=$1;
+        `;
+        pool.query(sqlText2, [req.params.id])
+          .then((dbRes) => {
+            res.sendStatus(200);
+          })
+          .catch((dbErr) => {
+            console.log('/soundclips DELETE nested err:', dbErr);
+            res.sendStatus(500);
+          })
+      }else{
+        res.sendStatus(500);
+      }
+    })
+    .catch((dbErr) => {
+      console.log('/soundclips DELETE err:', dbErr);
     })
 });
 

@@ -40,7 +40,7 @@ function App() {
   return (
 
     <div>
-    <Container disableGutters="false" sx={{backgroundColor: '#EEEEEE', height: '100vh'}}>
+    <Container disableGutters="true" sx={{ backgroundColor: '#EEEEEE', msOverflowY: 'scroll', pb: 3, minHeight: '100vh'}}>
     <Router>
         <Nav />
         <Switch>
@@ -155,7 +155,6 @@ function App() {
         </Switch>
     </Router>
     </Container>
-    <Footer />
     </div>
   );
 }

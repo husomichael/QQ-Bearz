@@ -25,7 +25,6 @@ function SoundboardItem({soundclip}) {
 
   // when a soundclip is clicked and delete is chosen it will dispatch the delete request
   function handleDeleteButton(){
-    console.log('delete');
     dispatch({
       type: 'DELETE_SOUND_CLIP',
       payload: {id: soundclip.id, url: soundclip.url}
@@ -75,7 +74,7 @@ function SoundboardItem({soundclip}) {
         sx={{mt: .5, pb: 3, pt: 3, width: '170px', height: '130px'}}
       >
         <CardContent display="flex" justifyContent="center" alignItems="center" sx={{textAlign: 'center'}}>
-          <VolumeUpIcon fontSize="medium" onClick={handlePlay} sx={{cursor: 'pointer', mb: 1.5, pr: 5, pl: 5}}/>
+          <VolumeUpIcon fontSize="medium" onClick={handlePlay} sx={{cursor: 'pointer', mb: 1.5, pr: 5, pl: 5, color: '#03C04A'}}/>
           <br />
           <Typography variant='h7' sx={{ maxWidth: '140px'}}>
             {soundclip.title}

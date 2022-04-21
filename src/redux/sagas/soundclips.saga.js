@@ -42,10 +42,12 @@ function* fetchSoundClips(action){
 };
 
 function* deleteSoundClip(action){
+  console.log('delete action.payload:', action.payload)
   try{
     const response = yield axios({
       method: 'DELETE',
-      url: `/api/soundclips/${action.payload}`,
+      url: `/api/soundclips/${action.payload.id}`,
+      data: action.payload
     })
     yield put({
       type: 'FETCH_SOUND_CLIPS',
