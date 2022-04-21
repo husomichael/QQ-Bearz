@@ -64,4 +64,22 @@ router.put('/soundboardrequest', rejectUnauthenticated, (req, res) => {
     })
 });
 
+//Get users for admin view
+router.get('/admin', rejectUnauthenticated, (req, res) => {
+  console.log(req.user);
+  if(req.user.access > 2){
+    const queryText = `
+      SELECT "id", "username", "access", "soundboard_access" FROM "user"
+      WHERE "access"<$1
+    `;
+    pool.query(queryText, [3])
+      .then((dbRes) => {
+        res.send(dbRes.rows);
+      })
+      .catch((dbErr) => {
+        console.log('/user/admin GET error:', dbErr);
+      })
+  };
+})
+
 module.exports = router;
