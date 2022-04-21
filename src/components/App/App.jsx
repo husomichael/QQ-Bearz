@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import {
   HashRouter as Router,
   Redirect,
@@ -150,7 +150,14 @@ function App() {
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 10 }}
+          >
             <h1>404</h1>
+          </Box>
           </Route>
         </Switch>
     </Router>

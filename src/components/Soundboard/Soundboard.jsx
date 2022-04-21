@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
-  Alert,
-  FormControl,
   Stack,
   TextField,
   Typography,
@@ -14,23 +11,15 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogContentText,
 } from "@mui/material";
 import SoundboardItem from "../SoundboardItem/SoundboardItem.jsx";
-import AddSoundClipModal from "../AddSoundClipModal/AddSoundClipModal.jsx";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import { Cancel, Tag } from "@mui/icons-material";
-import { DropzoneArea } from "material-ui-dropzone";
-import { useDropzone } from "react-dropzone";
-
-import toast from "react-hot-toast";
+import { Cancel } from "@mui/icons-material";
 import "./Soundboard.css";
-import errorsReducer from "../../redux/reducers/errors.reducer.js";
 
 function Soundboard() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const soundclips = useSelector((store) => store.soundclips);
   const [open, setOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");

@@ -21,12 +21,13 @@ function Nav() {
             Login / Register
           </Link>
         )}
-        {user.id && (
-          // If a user is logged in, but hasn't been given soundboard_access
+        {/* If a user is logged in, but hasn't been given soundboard_access */}
+        {user.id && !user.soundboard_access && user.access < 2 && (
           <Link className="navLink" to="/requestaccess">
             Request Access
           </Link>
         )}
+        {/* If user is an admin, show soundboard requests. */}
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
