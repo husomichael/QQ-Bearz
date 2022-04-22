@@ -6,6 +6,7 @@ import arakandeaths from './arakandeaths.reducer';
 import soundclips from './soundclips.reducer';
 import tags from './tags.reducer';
 import users from './users.reducer';
+import selectedUser from './selectedUser.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   soundclips, //soundclips reducer
   tags, //soundclips tags reducer
   users, //users for admin view
+  selectedUser, //selected user for managing access
 });
 
 export default rootReducer;

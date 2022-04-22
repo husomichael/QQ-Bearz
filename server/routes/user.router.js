@@ -91,7 +91,30 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
       .catch((dbErr) => {
         console.log('/user/admin GET error:', dbErr);
       })
+  }else{
+    res.sendStatus(500);
   };
-})
+});
+
+//Get selected user for managing access.
+router.get('/selected/:id', rejectUnauthenticated, (req, res) => {
+  if(req.user.access > 2){
+    const queryText = `
+      SELECT "id", "username", "access", "soundboard_access" FROM "user"
+      WHERE "id"=$1;
+    `;
+    pool.query(queryText, [req.params.id])
+      .then((dbRes) => {
+        if(req.user.access >= dbRes.rows[0].access){
+          res.send(dbRes.rows);
+        }else{
+          res.sendStatus(500);
+        };
+      })
+      .catch((dbErr) => {
+        console.log('/user/:id GET error:', dbErr);
+      })
+  };
+});
 
 module.exports = router;

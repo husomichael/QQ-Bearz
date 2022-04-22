@@ -53,10 +53,26 @@ function* fetchUsers(){
   };
 };
 
+function* fetchSelectedUser(action){
+  try{
+    const response = yield axios({
+      method: 'GET',
+      url: `/api/user/selected/${action.payload}`
+    })
+    yield put({
+      type: 'SET_SELECTED_USER',
+      payload: response.data
+    })
+  }catch(error){
+    console.log('fetchSelectedUser error:', error);
+  };
+};
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('SUBMIT_SOUNDBOARD_REQUEST', submitSoundboardRequest)
   yield takeLatest('FETCH_USERS', fetchUsers);
+  yield takeLatest('FETCH_SELECTED_USER', fetchSelectedUser);
 }
 
 export default userSaga;
