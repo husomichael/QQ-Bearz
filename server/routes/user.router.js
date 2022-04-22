@@ -106,7 +106,7 @@ router.get('/selected/:id', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [req.params.id])
       .then((dbRes) => {
         if(req.user.access >= dbRes.rows[0].access){
-          res.send(dbRes.rows);
+          res.send(dbRes.rows[0]);
         }else{
           res.sendStatus(500);
         };
