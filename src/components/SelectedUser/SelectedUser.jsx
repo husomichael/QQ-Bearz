@@ -28,15 +28,19 @@ function SelectedUser() {
       type: "FETCH_SELECTED_USER",
       payload: params.id,
     });
-  }
+  };
 
   function handleSubmitChanges(){
-
+    dispatch({
+      type: "UPDATE_USER_ACCESS",
+      payload: {userAccess: userAccess, id: selectedUser.id}
+    })
+    history.push('/manageaccess');
   };
 
   function goToManageAccess(){
-    history.push('/manageaccess')
-  }
+    history.push('/manageaccess');
+  };
 
   console.log("userAccess:", userAccess);
   //// MENU ////
@@ -66,7 +70,8 @@ function SelectedUser() {
       return "Member";
     } else if (userAccess == 3) {
       return "Moderator";
-    }
+    } else if (userAccess == null)
+    return "Select";
   }
 
   const StyledMenu = styled((props) => (
@@ -184,14 +189,14 @@ function SelectedUser() {
               )}
             </StyledMenu>
           </Box>
-            {selectedUser.access != userAccess && (
+            {selectedUser.access != userAccess && userAccess != null && (
             <Box
               display="flex"
               justifyContent="center"
               alignItems="center"
               sx={{ mt: 18 }}
             >
-              <Button variant="contained" color="success">
+              <Button variant="contained" color="success" onClick={handleSubmitChanges}>
                 Submit Changes
               </Button>
             </Box>
@@ -199,7 +204,7 @@ function SelectedUser() {
         </div>
       )}
       {user.access < 3 && (
-        <Box display="flex" justifyContent="center" alignItems="center" onClick={handleSubmitChanges}>
+        <Box display="flex" justifyContent="center" alignItems="center">
           <h1>404</h1>
         </Box>
       )}

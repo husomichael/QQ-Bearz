@@ -104,7 +104,7 @@ function GrantAccess() {
           </Table>
         </TableContainer>
       )}
-      {user.access < 3 && <h1>404</h1>}
+      {user.access < 2 && <h1>404</h1>}
     </Box>
   );
 }

@@ -68,11 +68,29 @@ function* fetchSelectedUser(action){
   };
 };
 
+function* updateUserAccess(action){
+  console.log('saga payload:', action.payload)
+  try{
+    const response = yield axios({
+      method: 'PUT',
+      url: `/api/user/selected/${action.payload.id}`,
+      data: action.payload
+    })
+    yield put({
+      type: 'FETCH_SELECTED_USER',
+      payload: response.data
+    })
+  }catch(error){
+    console.log('updateUserAccess error:', error);
+  };
+};
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('SUBMIT_SOUNDBOARD_REQUEST', submitSoundboardRequest)
   yield takeLatest('FETCH_USERS', fetchUsers);
   yield takeLatest('FETCH_SELECTED_USER', fetchSelectedUser);
+  yield takeLatest('UPDATE_USER_ACCESS', updateUserAccess);
 }
 
 export default userSaga;

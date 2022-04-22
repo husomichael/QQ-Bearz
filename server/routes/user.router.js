@@ -117,4 +117,24 @@ router.get('/selected/:id', rejectUnauthenticated, (req, res) => {
   };
 });
 
+//Update selected user access.
+router.put('/selected/:id', rejectUnauthenticated, (req, res) => {
+  console.log('in update', req.body);
+  if(req.user.access > 2){
+    const queryText = `
+      UPDATE "user"
+      SET "access"=$1, "soundboard_access"=$2
+      WHERE "id"=$3
+      RETURNING "id";
+    `;
+    pool.query(queryText, [req.body.userAccess, false, req.params.id])
+      .then((dbRes) => {
+        res.send(dbRes.rows[0]);
+      })
+      .catch((dbErr) => {
+        console.log('/user/:id access PUT error:', dbErr);
+      })
+  };
+})
+
 module.exports = router;
