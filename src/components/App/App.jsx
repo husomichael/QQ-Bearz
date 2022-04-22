@@ -27,6 +27,7 @@ import AddCorpsePhoto from '../AddCorpsePhoto/AddCorpsePhoto.jsx';
 import UserProfile from '../UserProfile/UserProfile.jsx';
 import RequestAccess from '../RequestAccess/RequestAccess.jsx';
 import GrantAccess from '../GrantAccess/GrantAccess.jsx';
+import SelectedUser from '../SelectedUser/SelectedUser.jsx';
 
 import './App.css';
 
@@ -160,6 +161,12 @@ function App() {
             path="/requestaccess"
           >
             <RequestAccess />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/selecteduser/:id"
+          >
+            <SelectedUser />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
