@@ -77,8 +77,7 @@ function* updateUserAccess(action){
       data: action.payload
     })
     yield put({
-      type: 'FETCH_SELECTED_USER',
-      payload: response.data
+      type: 'FETCH_USERS'
     })
   }catch(error){
     console.log('updateUserAccess error:', error);

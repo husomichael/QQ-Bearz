@@ -124,12 +124,11 @@ router.put('/selected/:id', rejectUnauthenticated, (req, res) => {
     const queryText = `
       UPDATE "user"
       SET "access"=$1, "soundboard_access"=$2
-      WHERE "id"=$3
-      RETURNING "id";
+      WHERE "id"=$3;
     `;
     pool.query(queryText, [req.body.userAccess, false, req.params.id])
       .then((dbRes) => {
-        res.send(dbRes.rows[0]);
+        res.sendStatus(200);
       })
       .catch((dbErr) => {
         console.log('/user/:id access PUT error:', dbErr);

@@ -24,8 +24,6 @@ function GrantAccess() {
   const users = useSelector((store) => store.users);
   const user = useSelector((store) => store.user);
   const [userrank, setUserRank] = useState("");
-  console.log("users:", users);
-  console.log("user", user);
 
   useEffect(() => {
     fetchUsers();
