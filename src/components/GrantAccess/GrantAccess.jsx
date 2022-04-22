@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, MenuItem, Select, InputLabel } from "@mui/material";
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,48 +12,88 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 function GrantAccess() {
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const users = useSelector((store) => store.users);
+  const [userrank, setUserRank] = useState('');
+  console.log("users:", users);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  function handleUserRank(e){
+    setUserRank(e.target.value);
+  };
+
+  function fetchUsers() {
+    dispatch({
+      type: "FETCH_USERS",
+    });
   }
 
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
-
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      sx={{ mt: 10 }}
+    >
+      <TableContainer sx={{maxWidth: '800px'}} component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Username</TableCell>
+              <TableCell align="right">Rank</TableCell>
+              <TableCell align="right">Requested Access</TableCell>
+              <TableCell align="right">Manage Access</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {users.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.username}</TableCell>
+                {row.access == 1 && (
+                  <TableCell align="right">
+                    New User
+                  </TableCell>
+                )}
+                {row.access == 2 && (
+                  <TableCell align="right">Member</TableCell>
+                )}
+                {row.access == 3 && (
+                  <TableCell align="right">Moderator</TableCell>
+                )}
+                {row.access == 4 && (
+                  <TableCell align="right">Admin</TableCell>
+                )}
+                {row.soundboard_access && (
+                  <TableCell
+                    align="right"
+                    sx={{ color: "green", fontSize: "18px" }}
+                  >
+                    Requested
+                  </TableCell>
+                )}
+                {!row.soundboard_access && (
+                  <TableCell
+                  align="right"
+                  sx={{ color: "green", fontSize: "18px" }}
+                >
+                </TableCell>
+                )}
+                <TableCell
+                align="right">
+                  <Button variant="contained" size="small" onClick={() => history.push(`/selecteduser/${row.id}`)}>
+                    Select
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
 

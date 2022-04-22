@@ -45,7 +45,8 @@ function* fetchUsers(){
       url: `/api/user/admin`
     })
     yield put({
-      type: 'SET_USERS'
+      type: 'SET_USERS',
+      payload: response.data
     })
   }catch(error){
     console.log('fetchUsers catch error:', error);
