@@ -152,7 +152,7 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute
             exact
-            path="/grantaccess"
+            path="/manageaccess"
           >
             <GrantAccess />
           </ProtectedRoute>

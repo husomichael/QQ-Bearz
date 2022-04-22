@@ -13,6 +13,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 function SelectedUser() {
   const dispatch = useDispatch();
   const params = useParams();
+  const history = useHistory();
   const selectedUser = useSelector((store) => store.selectedUser);
   const user = useSelector((store) => store.user);
   const [userAccess, setUserAccess] = useState("");
@@ -30,7 +31,11 @@ function SelectedUser() {
   }
 
   function handleSubmitChanges(){
-    
+
+  };
+
+  function goToManageAccess(){
+    history.push('/manageaccess')
   }
 
   console.log("userAccess:", userAccess);
@@ -117,7 +122,17 @@ function SelectedUser() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            sx={{ mt: 15 }}
+            sx={{ mt: 15}}
+          >
+            <Button variant="outlined" onClick={goToManageAccess} sx={{mr: '45%'}}>
+              Back
+            </Button>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 15}}
           >
             <Typography variant="h4">Manage access for </Typography>
           </Box>
