@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import {Box, Typography, Grid, Button} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import {Box, Typography} from '@mui/material';
+import { useSelector } from 'react-redux';
 
 function UserProfile() {
 
@@ -10,8 +10,8 @@ function UserProfile() {
 
   console.log(user);
 
-  //Link profile with Blizzard API
-  //Append account / character info to set profile page.
+  //TODO: Link profile with Blizzard API
+  //TODO: Append account / character info to set profile page.
 
   return (
     <div>

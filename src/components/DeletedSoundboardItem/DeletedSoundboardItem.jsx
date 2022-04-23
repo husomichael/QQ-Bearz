@@ -1,27 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Button,
   IconButton,
   Fade,
   Tooltip,
   Card,
   CardContent,
-  CardActionArea,
-  CardMedia,
   MenuItem,
   Menu,
   Typography,
-  Paper,
 } from "@mui/material";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import DeleteIcon from "@mui/icons-material/Delete";
-import DeleteOutlinedIcon from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 function DeletedSoundboardItem({ soundclip }) {
   const dispatch = useDispatch();
-  // const [audioPlay, setAudioPlay] = useState(false);
   const user = useSelector((store) => store.user);
   var audio = new Audio(soundclip.url);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,10 +28,10 @@ function DeletedSoundboardItem({ soundclip }) {
     setAnchorEl(null);
   };
 
-  // when the MoreVertIcon is clicked and delete is chosen it will dispatch the delete request
-  function handleDeleteButton() {
+  // when the MoreVertIcon is clicked and restore is chosen it will dispatch the restore request
+  function handleRestoreButton() {
     dispatch({
-      type: "DELETE_SOUND_CLIP",
+      type: "RESTORE_SOUND_CLIP",
       payload: { id: soundclip.id, url: soundclip.url },
     });
     handleClose();
@@ -48,9 +41,9 @@ function DeletedSoundboardItem({ soundclip }) {
     audio.play();
   }
 
-  const handleDeleteMenu = () => {
+  const handleRestoreMenu = () => {
     //TODO: add admin conditional
-    if (user.id == soundclip.user_id || user.access > 2)
+    if ( user.access > 2)
       return (
         <div>
           <IconButton
@@ -74,8 +67,8 @@ function DeletedSoundboardItem({ soundclip }) {
             onClose={handleClose}
             TransitionComponent={Fade}
           >
-            <MenuItem sx={{ color: "red" }} onClick={handleDeleteButton}>
-              Delete
+            <MenuItem sx={{ color: "green" }} onClick={handleRestoreButton}>
+              Restore
             </MenuItem>
           </Menu>
         </div>
@@ -94,14 +87,14 @@ function DeletedSoundboardItem({ soundclip }) {
           <VolumeUpIcon
             fontSize="medium"
             onClick={handlePlay}
-            sx={{ cursor: "pointer", mb: 1.5, pr: 7, pl: 7, color: "#03C04A" }}
+            sx={{ cursor: "pointer", mb: 1.5, pr: 7, pl: 7, color: "#ff6666" }}
           />
           <br />
           <Typography variant="h7" onClick={handlePlay} sx={{ cursor: "pointer", maxWidth: "140px" }}>
             {soundclip.title}
           </Typography>
           <br />
-          {handleDeleteMenu()}
+          {handleRestoreMenu()}
         </CardContent>
       </Card>
     </Tooltip>

@@ -90,7 +90,7 @@ router.get('/tags', rejectUnauthenticated, (req, res) => {
 });
 
 //Update deleted boolean on specific soundclip to true.
-router.put('/delete/:id', rejectUnauthenticated, (req, res) => {
+router.put('/delete/:id', (req, res) => {
   if(req.user.access > 1){
   const sqlText = `
     SELECT * FROM "soundclips"

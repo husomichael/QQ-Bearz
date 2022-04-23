@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid } from "@mui/material";
+import DeletedSoundboardItem from "../DeletedSoundboardItem/DeletedSoundboardItem.jsx";
 
 function DeletedSoundboard() {
   const dispatch = useDispatch();
@@ -18,21 +19,23 @@ function DeletedSoundboard() {
   }
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{ mt: 12 }}
-    >
+    <div>
       {user.access > 2 && (
         <div>
-          <Typography variant="h6">Deleted Clips</Typography>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 12 }}
+          >
+            <Typography variant="h6">Deleted Clips</Typography>
+          </Box>
           <Grid container spacing={1} sx={{ mt: 5, ml: 0.4 }}>
             {soundclips.map((soundclip) => {
               if (soundclip.deleted == true) {
                 return (
                   <Grid item xs={2} key={soundclip.id}>
-                    {/* <DeletedSoundboardItem soundclip={soundclip} /> */}
+                    <DeletedSoundboardItem soundclip={soundclip} />
                   </Grid>
                 );
               }
@@ -41,9 +44,18 @@ function DeletedSoundboard() {
         </div>
       )}
       {user.access < 3 && (
-        <h1>404</h1>
+        <div>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 10 }}
+          >
+            <h1>404</h1>
+          </Box>
+        </div>
       )}
-    </Box>
+    </div>
   );
 }
 

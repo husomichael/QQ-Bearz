@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Card, CardActionArea, CardMedia, MenuItem, Menu} from '@mui/material';
 
+//A component for future iterations of QQ Bearz.
 
 function ArakanDeathCounterItem({photo}) {
   // hooks being used

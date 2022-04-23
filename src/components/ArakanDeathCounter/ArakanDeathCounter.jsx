@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Box, Button, Grid } from '@mui/material';
 import ArakanDeathCounterItem from '../ArakanDeathCounterItem/ArakanDeathCounterItem.jsx';
 
+//A component for future iterations of QQ Bearz.
 function ArakanDeathCounter(){
 
   const dispatch = useDispatch();

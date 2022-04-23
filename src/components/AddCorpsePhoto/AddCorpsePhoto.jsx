@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Box, Typography, Button, TextField } from '@mui/material';
 
+//A component for future iterations of QQ Bearz.
 function AddCorpsePhoto() {
 
   const history = useHistory();

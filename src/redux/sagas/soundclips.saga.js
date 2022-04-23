@@ -45,7 +45,7 @@ function* deleteSoundClip(action){
   console.log('delete action.payload:', action.payload)
   try{
     const response = yield axios({
-      method: 'UPDATE',
+      method: 'PUT',
       url: `/api/soundclips/delete/${action.payload.id}`,
       data: action.payload
     })
@@ -61,7 +61,7 @@ function* restoreSoundClip(action){
   console.log('restore action.payload:', action.payload)
   try{
     const response = yield axios({
-      method: 'UPDATE',
+      method: 'PUT',
       url: `/api/soundclips/restore/${action.payload.id}`,
       data: action.payload
     })
@@ -93,6 +93,7 @@ function* soundClipsSaga(){
   yield takeEvery('FETCH_SOUND_CLIPS', fetchSoundClips);
   yield takeEvery('DELETE_SOUND_CLIP', deleteSoundClip);
   yield takeEvery('FETCH_TAGS', fetchTags);
+  yield takeEvery('RESTORE_SOUND_CLIP', restoreSoundClip);
 };
 
 export default soundClipsSaga;
