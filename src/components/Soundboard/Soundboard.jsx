@@ -16,7 +16,7 @@ import SoundboardItem from "../SoundboardItem/SoundboardItem.jsx";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { Cancel } from "@mui/icons-material";
-import "./Soundboard.css";
+import toast from 'react-hot-toast';
 
 
 function Soundboard() {
@@ -138,6 +138,7 @@ function Soundboard() {
         payload: { clip: selectedFile, tags: tags, title: clipTitle },
       });
       handleClose();
+      toast.success(`Soundclip submitted!`);
     } else if (selectedFile == "") {
       alert("Select a file to upload!");
     } else if (clipTitle == "") {
