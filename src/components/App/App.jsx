@@ -164,7 +164,7 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute
           exact
-          path="/deletedclips"
+          path="/deletedsoundboard"
           >
             <DeletedSoundClips />
           </ProtectedRoute>

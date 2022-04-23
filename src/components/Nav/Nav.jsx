@@ -26,10 +26,16 @@ function Nav() {
             Request Access
           </Link>
         )}
-        {/* If user is an admin, show soundboard requests. */}
+        {/* If user is a moderator or admin, show link to new user soundboard requests. */}
         {user.id && user.access > 2 && (
           <Link className="navLink" to="/manageaccess">
             Manage Access
+          </Link>
+        )}
+        {/* If user is a moderator or admin, show link to "deleted" soundclips. */}
+        {user.id && user.access > 2 && (
+          <Link className="navLink" to="/deletedsoundboard">
+            Deleted Soundboard
           </Link>
         )}
         {/* If a user is logged in, show these links */}
