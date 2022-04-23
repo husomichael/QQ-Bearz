@@ -27,6 +27,7 @@ import UserProfile from '../UserProfile/UserProfile.jsx';
 import RequestAccess from '../RequestAccess/RequestAccess.jsx';
 import GrantAccess from '../GrantAccess/GrantAccess.jsx';
 import SelectedUser from '../SelectedUser/SelectedUser.jsx';
+import DeletedSoundClips from '../DeletedSoundboard/DeletedSoundboard.jsx';
 
 import './App.css';
 
@@ -161,7 +162,12 @@ function App() {
           >
             <SelectedUser />
           </ProtectedRoute>
-
+          <ProtectedRoute
+          exact
+          path="/deletedclips"
+          >
+            <DeletedSoundClips />
+          </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
           <Box

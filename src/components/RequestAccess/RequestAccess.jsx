@@ -36,7 +36,7 @@ function RequestAccess() {
           >
             <Typography
               variant="p"
-              sx={{ maxWidth: "450px", fontStyle: "italic" }}
+              sx={{ maxWidth: "450px" }}
             >
               To access the ability to contribute to the soundboard by uploading
               soundclips, submit a request for access by clicking the button

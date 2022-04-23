@@ -8,7 +8,7 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   return (
     <Paper
-        sx={{ pt: 1, mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F1F1F1"}}
+        sx={{ pt: 1, mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F5F5F5"}}
       >
       <Box
         display="flex"

@@ -175,11 +175,13 @@ function Soundboard() {
       )}
       <Grid container spacing={1} sx={{ mt: 5, ml: 0.4 }}>
         {soundclips.map((soundclip) => {
-          return (
-            <Grid item xs={2} key={soundclip.id}>
-              <SoundboardItem soundclip={soundclip} />
-            </Grid>
-          );
+          if(soundclip.deleted == false) {
+            return (
+              <Grid item xs={2} key={soundclip.id}>
+                <SoundboardItem soundclip={soundclip} />
+              </Grid>
+            );
+          };
         })}
       </Grid>
       <Dialog fullWidth="md" open={open} onClose={handleClose} sx={{}}>
