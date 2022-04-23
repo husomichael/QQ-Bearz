@@ -8,56 +8,57 @@ const fs = require('fs');
 
 // POSTs a new soundclip to cloudinary and then the DB, then inserts related tags to the tags table.
 router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), async (req, res) => {
-  console.log('req.file:', req.file);
-  const soundclipUrl = req.file.path;
-  const soundclipTitle = req.body.title;
-  const tagsArray = req.body.tags.split(',');
-  console.log('tagsArray:', tagsArray);
-  console.log('soundclipTitle:', soundclipTitle);
-  const sqlText = `
-    INSERT INTO "soundclips"
-    ("user_id", "title", "url", "username")
-    VALUES
-    ($1, $2, $3, $4)
-    RETURNING "id";
-  `;
-  const sqlValues = [req.user.id, soundclipTitle, soundclipUrl, req.user.username];
-  pool.query(sqlText, sqlValues)
-    .then((dbRes) => {
-      let sqlText2 = `
-            INSERT INTO "tags"
-            ("soundclip_id", "tag")
-            VALUES 
-      `;
-      let sqlValues2 = [
-        dbRes.rows[0].id, // $1
-      ];
-      for (let i = 0; i < tagsArray.length; i++) {
-        sqlText2 += `($1, $${i + 2})`;
-        sqlValues2.push(tagsArray[i]);
-        // If its the last ingredient being entered, add semicolon to end SQL query,
-        // Otherwise add ', ' before concatenating next values
-        if (i === tagsArray.length - 1) {
-          sqlText2 += ';';
-        } else {
-          sqlText2 += ', ';
+  if(req.user.access > 1){
+    const soundclipUrl = req.file.path;
+    const soundclipTitle = req.body.title;
+    const tagsArray = req.body.tags.split(',');
+    console.log('tagsArray:', tagsArray);
+    console.log('soundclipTitle:', soundclipTitle);
+    const sqlText = `
+      INSERT INTO "soundclips"
+      ("user_id", "title", "url", "username")
+      VALUES
+      ($1, $2, $3, $4)
+      RETURNING "id";
+    `;
+    const sqlValues = [req.user.id, soundclipTitle, soundclipUrl, req.user.username];
+    pool.query(sqlText, sqlValues)
+      .then((dbRes) => {
+        let sqlText2 = `
+              INSERT INTO "tags"
+              ("soundclip_id", "tag")
+              VALUES 
+        `;
+        let sqlValues2 = [
+          dbRes.rows[0].id, // $1
+        ];
+        for (let i = 0; i < tagsArray.length; i++) {
+          sqlText2 += `($1, $${i + 2})`;
+          sqlValues2.push(tagsArray[i]);
+          // If its the last ingredient being entered, add semicolon to end SQL query,
+          // Otherwise add ', ' before concatenating next values
+          if (i === tagsArray.length - 1) {
+            sqlText2 += ';';
+          } else {
+            sqlText2 += ', ';
+          };
         };
-      };
-      console.log('sqlText2:', sqlText2);
-      console.log('sqlValues2:', sqlValues2);
-      pool.query(sqlText2, sqlValues2)
-        .then((dbRes) => {
-          res.sendStatus(200);
-        })
-        .catch((dbErr) => {
-          console.log('/soundclips POST tags nested error:', dbErr);
-          res.sendStatus(500);
-        })
-    })
-    .catch((dbErr) => {
-      console.log('/soundclips POST error:', dbErr);
-      res.sendStatus(500);
-    });
+        console.log('sqlText2:', sqlText2);
+        console.log('sqlValues2:', sqlValues2);
+        pool.query(sqlText2, sqlValues2)
+          .then((dbRes) => {
+            res.sendStatus(200);
+          })
+          .catch((dbErr) => {
+            console.log('/soundclips POST tags nested error:', dbErr);
+            res.sendStatus(500);
+          })
+      })
+      .catch((dbErr) => {
+        console.log('/soundclips POST error:', dbErr);
+        res.sendStatus(500);
+      });
+  };
 });
 
 router.get('/', rejectUnauthenticated, (req, res) => {

@@ -96,12 +96,12 @@ function Soundboard() {
           {`No file selected.`}
         </Typography>
       );
-    }
-  }
+    };
+  };
 
   function handleClipTitle(e) {
     setClipTitle(e.target.value);
-  }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -116,19 +116,19 @@ function Soundboard() {
 
   function goToAddSoundClip() {
     setOpen(true);
-  }
+  };
 
   function fetchSoundClips() {
     dispatch({
       type: "FETCH_SOUND_CLIPS",
     });
-  }
+  };
 
   function fetchTags() {
     dispatch({
       type: "FETCH_TAGS",
     });
-  }
+  };
 
   function handleSubmitMp3() {
     if (selectedFile != "" && clipTitle != "") {
@@ -142,8 +142,8 @@ function Soundboard() {
       alert("Select a file to upload!");
     } else if (clipTitle == "") {
       alert("Add a Title!");
-    }
-  }
+    };
+  };
 
   return (
     <div>
@@ -151,7 +151,7 @@ function Soundboard() {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ mt: 10 }}
+        sx={{ mt: 12 }}
       >
         <Typography variant="h6">Soundboard</Typography>
       </Box>

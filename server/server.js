@@ -25,7 +25,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/soundclips', soundClipsRouter);
-app.use('/api/arakan', arakanRouter);
+// app.use('/api/arakan', arakanRouter);
 
 // Serve static files
 app.use(express.static('build'));
