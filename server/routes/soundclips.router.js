@@ -18,10 +18,10 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
       INSERT INTO "soundclips"
       ("user_id", "title", "url", "username")
       VALUES
-      ($1, $2, $3, $4)
+      ($1, $2, $3, $4, $5)
       RETURNING "id";
     `;
-    const sqlValues = [req.user.id, soundclipTitle, soundclipUrl, req.user.username];
+    const sqlValues = [req.user.id, soundclipTitle, soundclipUrl, req.user.username, false];
     pool.query(sqlText, sqlValues)
       .then((dbRes) => {
         let sqlText2 = `
@@ -90,36 +90,100 @@ router.get('/tags', rejectUnauthenticated, (req, res) => {
 });
 
 //TODO: Add admin conditional for delete.
-router.delete('/:id', rejectUnauthenticated, (req, res) =>{
+// router.delete('/:id', rejectUnauthenticated, (req, res) =>{
+//   const sqlText = `
+//     SELECT * FROM "soundclips"
+//     WHERE "id"=$1;
+//   `;
+//   pool.query(sqlText, [req.params.id])
+//     .then((dbRes) => {
+//       console.log('dbres:', dbRes.rows[0].user_id);
+//       console.log(req.user.id);
+//       //TODO GOES HERE...
+//       if(dbRes.rows[0].user_id == req.user.id){
+//         const sqlText2 = `
+//           DELETE FROM "soundclips"
+//           WHERE "id"=$1;
+//         `;
+//         pool.query(sqlText2, [req.params.id])
+//           .then((dbRes) => {
+//             res.sendStatus(200);
+//           })
+//           .catch((dbErr) => {
+//             console.log('/soundclips DELETE nested err:', dbErr);
+//             res.sendStatus(500);
+//           })
+//       }else{
+//         res.sendStatus(500);
+//       }
+//     })
+//     .catch((dbErr) => {
+//       console.log('/soundclips DELETE err:', dbErr);
+//     })
+// });
+
+//Update deleted boolean on specific soundclip to true.
+router.put('/delete/:id', rejectUnauthenticated, (req, res) => {
+  if(req.user.access > 1){
   const sqlText = `
     SELECT * FROM "soundclips"
     WHERE "id"=$1;
   `;
   pool.query(sqlText, [req.params.id])
     .then((dbRes) => {
-      console.log('dbres:', dbRes.rows[0].user_id);
-      console.log(req.user.id);
-      //TODO GOES HERE...
-      if(dbRes.rows[0].user_id == req.user.id){
+      if(dbRes.rows[0].user_id == req.user.id || req.user.access > 2){
         const sqlText2 = `
-          DELETE FROM "soundclips"
-          WHERE "id"=$1;
+          UPDATE "soundclips"
+          SET "deleted"=$1
+          WHERE "id"=$2;
         `;
-        pool.query(sqlText2, [req.params.id])
+        pool.query(sqlText2, [true, req.params.id])
           .then((dbRes) => {
             res.sendStatus(200);
           })
           .catch((dbErr) => {
-            console.log('/soundclips DELETE nested err:', dbErr);
+            console.log('/soundclips/delete/:id PUT update error:', dbErr);
             res.sendStatus(500);
           })
-      }else{
-        res.sendStatus(500);
-      }
+      };
     })
     .catch((dbErr) => {
-      console.log('/soundclips DELETE err:', dbErr);
+      console.log('/soundclips/delete/:id PUT select error:', dbErr);
+      res.sendStatus(500);
     })
+  };
+});
+
+//Update deleted boolean on specific soundclip to false.
+router.put('/restore/:id', rejectUnauthenticated, (req, res) => {
+  if(req.user.access > 1){
+  const sqlText = `
+    SELECT * FROM "soundclips"
+    WHERE "id"=$1;
+  `;
+  pool.query(sqlText, [req.params.id])
+    .then((dbRes) => {
+      if(dbRes.rows[0].user_id == req.user.id || req.user.access > 2){
+        const sqlText2 = `
+          UPDATE "soundclips"
+          SET "deleted"=$1
+          WHERE "id"=$2;
+        `;
+        pool.query(sqlText2, [true, req.params.id])
+          .then((dbRes) => {
+            res.sendStatus(200);
+          })
+          .catch((dbErr) => {
+            console.log('/soundclips/update/:id PUT update error:', dbErr);
+            res.sendStatus(500);
+          })
+      };
+    })
+    .catch((dbErr) => {
+      console.log('/soundclips/update/:id PUT select error:', dbErr);
+      res.sendStatus(500);
+    })
+  };
 });
 
 module.exports = router;
