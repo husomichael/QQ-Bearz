@@ -45,8 +45,8 @@ function* deleteSoundClip(action){
   console.log('delete action.payload:', action.payload)
   try{
     const response = yield axios({
-      method: 'DELETE',
-      url: `/api/soundclips/${action.payload.id}`,
+      method: 'UPDATE',
+      url: `/api/soundclips/delete/${action.payload.id}`,
       data: action.payload
     })
     yield put({
@@ -54,6 +54,22 @@ function* deleteSoundClip(action){
     })
   }catch(error){
     console.log('deleteSoundClip catch error:', error);
+  };
+};
+
+function* restoreSoundClip(action){
+  console.log('restore action.payload:', action.payload)
+  try{
+    const response = yield axios({
+      method: 'UPDATE',
+      url: `/api/soundclips/restore/${action.payload.id}`,
+      data: action.payload
+    })
+    yield put({
+      type: 'FETCH_SOUND_CLIPS',
+    })
+  }catch(error){
+    console.log('updateSoundClip catch error:', error);
   };
 };
 

@@ -16,7 +16,7 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
     console.log('soundclipTitle:', soundclipTitle);
     const sqlText = `
       INSERT INTO "soundclips"
-      ("user_id", "title", "url", "username")
+      ("user_id", "title", "url", "username", "deleted")
       VALUES
       ($1, $2, $3, $4, $5)
       RETURNING "id";
@@ -35,7 +35,7 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
         for (let i = 0; i < tagsArray.length; i++) {
           sqlText2 += `($1, $${i + 2})`;
           sqlValues2.push(tagsArray[i]);
-          // If its the last ingredient being entered, add semicolon to end SQL query,
+          // If its the last tag being entered, add semicolon to end SQL query,
           // Otherwise add ', ' before concatenating next values
           if (i === tagsArray.length - 1) {
             sqlText2 += ';';
@@ -89,39 +89,6 @@ router.get('/tags', rejectUnauthenticated, (req, res) => {
     })
 });
 
-//TODO: Add admin conditional for delete.
-// router.delete('/:id', rejectUnauthenticated, (req, res) =>{
-//   const sqlText = `
-//     SELECT * FROM "soundclips"
-//     WHERE "id"=$1;
-//   `;
-//   pool.query(sqlText, [req.params.id])
-//     .then((dbRes) => {
-//       console.log('dbres:', dbRes.rows[0].user_id);
-//       console.log(req.user.id);
-//       //TODO GOES HERE...
-//       if(dbRes.rows[0].user_id == req.user.id){
-//         const sqlText2 = `
-//           DELETE FROM "soundclips"
-//           WHERE "id"=$1;
-//         `;
-//         pool.query(sqlText2, [req.params.id])
-//           .then((dbRes) => {
-//             res.sendStatus(200);
-//           })
-//           .catch((dbErr) => {
-//             console.log('/soundclips DELETE nested err:', dbErr);
-//             res.sendStatus(500);
-//           })
-//       }else{
-//         res.sendStatus(500);
-//       }
-//     })
-//     .catch((dbErr) => {
-//       console.log('/soundclips DELETE err:', dbErr);
-//     })
-// });
-
 //Update deleted boolean on specific soundclip to true.
 router.put('/delete/:id', rejectUnauthenticated, (req, res) => {
   if(req.user.access > 1){
@@ -169,18 +136,18 @@ router.put('/restore/:id', rejectUnauthenticated, (req, res) => {
           SET "deleted"=$1
           WHERE "id"=$2;
         `;
-        pool.query(sqlText2, [true, req.params.id])
+        pool.query(sqlText2, [false, req.params.id])
           .then((dbRes) => {
             res.sendStatus(200);
           })
           .catch((dbErr) => {
-            console.log('/soundclips/update/:id PUT update error:', dbErr);
+            console.log('/soundclips/restore/:id PUT update error:', dbErr);
             res.sendStatus(500);
           })
       };
     })
     .catch((dbErr) => {
-      console.log('/soundclips/update/:id PUT select error:', dbErr);
+      console.log('/soundclips/restore/:id PUT select error:', dbErr);
       res.sendStatus(500);
     })
   };
