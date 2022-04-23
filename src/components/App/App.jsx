@@ -21,7 +21,6 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Soundboard from '../Soundboard/Soundboard.jsx';
-import AddSoundClip from '../AddSoundClip/AddSoundClip.jsx';
 import ArakanDeathCounter from '../ArakanDeathCounter/ArakanDeathCounter.jsx';
 import AddCorpsePhoto from '../AddCorpsePhoto/AddCorpsePhoto.jsx';
 import UserProfile from '../UserProfile/UserProfile.jsx';
@@ -126,13 +125,7 @@ function App() {
           >
             <Soundboard />
           </ProtectedRoute>
-          <ProtectedRoute
-            exact
-            path="/addsoundclip"
-          >
-            <AddSoundClip />
-          </ProtectedRoute>
-          <ProtectedRoute
+          {/* <ProtectedRoute
             exact
             path="/arakandeathcounter"
           >
@@ -143,7 +136,7 @@ function App() {
             path="/addcorpsephoto"
           >
             <AddCorpsePhoto />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
           <ProtectedRoute
             exact
             path="/userprofile"

@@ -43,9 +43,9 @@ function Nav() {
               Soundboard
             </Link>
 
-            <Link className="navLink" to="/info">
+            {/* <Link className="navLink" to="/info">
               Info
-            </Link>
+            </Link> */}
 
             {/* <Link className="navLink" to="/arakandeathcounter">
               Arakan Deaths

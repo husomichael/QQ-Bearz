@@ -42,7 +42,7 @@
 
 .navLinkLogout {
   display: inline-block;
-  color: #555555;
+  color: #ff6666;
   background-color: #D6D6D6;
   text-align: center;
   padding: 24px 10px;
@@ -60,13 +60,13 @@
 }
 
 .navLink:hover {
-  color: #000000
+  color: #24b1dd;
 }
 
 .navLinkLogout:hover {
-  color: #000000
+  color: #24b1dd;
 }
 
 .nav-title:hover {
-  color: #000000
+  color: #24b1dd;
 }

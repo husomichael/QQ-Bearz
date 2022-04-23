@@ -94,10 +94,10 @@ function SoundboardItem({ soundclip }) {
           <VolumeUpIcon
             fontSize="medium"
             onClick={handlePlay}
-            sx={{ cursor: "pointer", mb: 1.5, pr: 5, pl: 5, color: "#03C04A" }}
+            sx={{ cursor: "pointer", mb: 1.5, pr: 7, pl: 7, color: "#03C04A" }}
           />
           <br />
-          <Typography variant="h7" sx={{ maxWidth: "140px" }}>
+          <Typography variant="h7" onClick={handlePlay} sx={{ cursor: "pointer", maxWidth: "140px" }}>
             {soundclip.title}
           </Typography>
           <br />

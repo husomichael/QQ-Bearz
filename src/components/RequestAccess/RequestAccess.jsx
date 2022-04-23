@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Paper } from "@mui/material";
 
 function RequestAccess() {
   const dispatch = useDispatch();
@@ -17,12 +17,14 @@ function RequestAccess() {
   function requestAccessConditional() {
     if (user.access == 1) {
       return (
-        <Box>
+        <Paper
+        sx={{ pt: 1, mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F1F1F1"}}
+      >
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            sx={{ mt: 15 }}
+            sx={{ mt: 10 }}
           >
             <Typography variant="h4">Request Access</Typography>
           </Box>
@@ -34,7 +36,7 @@ function RequestAccess() {
           >
             <Typography
               variant="p"
-              sx={{ maxWidth: "500px", fontStyle: "italic" }}
+              sx={{ maxWidth: "450px", fontStyle: "italic" }}
             >
               To access the ability to contribute to the soundboard by uploading
               soundclips, submit a request for access by clicking the button
@@ -72,7 +74,7 @@ function RequestAccess() {
               </Typography>
             </Box>
           )}
-        </Box>
+        </Paper>
       );
     }
   }

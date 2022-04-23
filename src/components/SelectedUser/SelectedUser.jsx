@@ -1,4 +1,4 @@
-import { Typography, Box, Button, Menu, MenuItem } from "@mui/material";
+import { Typography, Box, Button, Menu, MenuItem, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
@@ -122,14 +122,16 @@ function SelectedUser() {
   return (
     <div>
       {user.access > 2 && (
-        <div>
+        <Paper
+        sx={{ mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F1F1F1"}}
+      >
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
             sx={{ mt: 15}}
           >
-            <Button variant="outlined" onClick={goToManageAccess} sx={{mr: '45%'}}>
+            <Button variant="contained" onClick={goToManageAccess} sx={{mr: '83%', mt: 1}}>
               Back
             </Button>
           </Box>
@@ -201,7 +203,7 @@ function SelectedUser() {
               </Button>
             </Box>
             )}
-        </div>
+        </Paper>
       )}
       {user.access < 3 && (
         <Box display="flex" justifyContent="center" alignItems="center">
