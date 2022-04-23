@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Container, Box } from '@mui/material';
 import {
   HashRouter as Router,
@@ -24,7 +24,7 @@ import UserProfile from '../UserProfile/UserProfile.jsx';
 import RequestAccess from '../RequestAccess/RequestAccess.jsx';
 import GrantAccess from '../GrantAccess/GrantAccess.jsx';
 import SelectedUser from '../SelectedUser/SelectedUser.jsx';
-import DeletedSoundClips from '../DeletedSoundboard/DeletedSoundboard.jsx';
+import DeletedSoundboard from '../DeletedSoundboard/DeletedSoundboard.jsx';
 
 import './App.css';
 
@@ -163,7 +163,19 @@ function App() {
           exact
           path="/deletedsoundboard"
           >
-            <DeletedSoundClips />
+            {user.access > 2 && (
+              <DeletedSoundboard />
+            )}
+            {user.access < 3 && (
+              <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ mt: 10 }}
+            >
+              <h1>404</h1>
+            </Box>
+            )}
           </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>

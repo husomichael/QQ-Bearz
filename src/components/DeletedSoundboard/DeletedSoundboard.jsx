@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Grid } from "@mui/material";
 import DeletedSoundboardItem from "../DeletedSoundboardItem/DeletedSoundboardItem.jsx";
 
+
+//This component is appending slightly left compared to every other component.
 function DeletedSoundboard() {
   const dispatch = useDispatch();
   const soundclips = useSelector((store) => store.soundclips);
@@ -20,8 +22,6 @@ function DeletedSoundboard() {
 
   return (
     <div>
-      {user.access > 2 && (
-        <div>
           <Box
             display="flex"
             justifyContent="center"
@@ -38,25 +38,11 @@ function DeletedSoundboard() {
                     <DeletedSoundboardItem soundclip={soundclip} />
                   </Grid>
                 );
-              }
+              };
             })}
           </Grid>
-        </div>
-      )}
-      {user.access < 3 && (
-        <div>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ mt: 10 }}
-          >
-            <h1>404</h1>
-          </Box>
-        </div>
-      )}
     </div>
   );
-}
+};
 
 export default DeletedSoundboard;
