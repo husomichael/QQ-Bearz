@@ -14,17 +14,17 @@ function ArakanDeathCounter(){
 
   console.log('arakan up one:', arakan);
 
-  useEffect(() => {
-    dispatch({
-      type: 'FETCH_ARAKAN_DEATHS'
-    })
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: 'FETCH_ARAKAN_DEATHS'
+  //   })
+  // }, []);
 
-  useEffect(() => {
-    dispatch({
-      type: 'FETCH_ARAKAN_PHOTOS'
-    });
-  }, [])
+  // useEffect(() => {
+  //   dispatch({
+  //     type: 'FETCH_ARAKAN_PHOTOS'
+  //   });
+  // }, [])
 
   function addDeath(){
     dispatch({

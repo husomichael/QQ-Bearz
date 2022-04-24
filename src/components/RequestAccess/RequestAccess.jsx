@@ -81,7 +81,7 @@ function RequestAccess() {
     }
   }
 
-  return <div>{requestAccessConditional()}</div>;
+  return <div>{() => requestAccessConditional()}</div>;
 };
 
 export default RequestAccess;

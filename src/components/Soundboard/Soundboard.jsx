@@ -29,7 +29,6 @@ function Soundboard() {
 
   useEffect(() => {
     fetchSoundClips();
-    fetchTags();
   }, []);
 
   //////////////////// TAGS /////////////////////////
@@ -76,28 +75,6 @@ function Soundboard() {
   };
 
   //////////////////// END TAGS /////////////////////////
-
-  function handleSelectedMp3() {
-    if (selectedFile != "") {
-      return (
-        <Typography
-          textAlign="center"
-          sx={{ mt: 1, mb: 1, color: "#38AEE5", fontSize: "22px" }}
-        >
-          {`${selectedFile.name} selected.`}
-        </Typography>
-      );
-    } else {
-      return (
-        <Typography
-          textAlign="center"
-          sx={{ mt: 1, mb: 1, color: "#black", fontSize: "22px" }}
-        >
-          {`No file selected.`}
-        </Typography>
-      );
-    };
-  };
 
   function handleClipTitle(e) {
     setClipTitle(e.target.value);
@@ -276,7 +253,22 @@ function Soundboard() {
               Max Size: 2mb
             </Typography>
           </Box>
-          {handleSelectedMp3()}
+          {selectedFile == "" && (
+            <Typography
+              textAlign="center"  
+              sx={{ mt: 1, mb: 1, color: "#black", fontSize: "22px" }}  
+            >
+              No file selected.
+            </Typography>
+          )}
+          {selectedFile != "" && (
+            <Typography
+             textAlign="center"
+              sx={{ mt: 1, mb: 1, color: "#38AEE5", fontSize: "22px" }}
+            >
+              {`${selectedFile.name} selected.`}
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions sx={{ mr: "25%", ml: "25%" }}>
           <Button
