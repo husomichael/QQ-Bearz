@@ -17,11 +17,11 @@ function RequestAccess() {
   };
 
   return(
-    <Paper
-        sx={{ pt: 1, mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F1F1F1"}}
-     >
-    {user.access == 1 && (
-      <div>
+    <div>
+      {user.access == 1 && (
+        <Paper
+          sx={{ pt: 1, mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F1F1F1"}}
+        >  
         <Box
             display="flex"
             justifyContent="center"
@@ -74,9 +74,9 @@ function RequestAccess() {
               </Typography>
             </Box>
           )}
-      </div>
+      </Paper>
     )}
-    </Paper>
+    </div>
   )
 };
 

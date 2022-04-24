@@ -9,10 +9,11 @@ import {
   MenuItem,
   Menu,
   Typography,
+  useRadioGroup,
 } from "@mui/material";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 function DeletedSoundboardItem({ soundclip }) {
   const dispatch = useDispatch();
@@ -43,40 +44,6 @@ function DeletedSoundboardItem({ soundclip }) {
     audio.play();
   }
 
-  const handleRestoreMenu = () => {
-    //TODO: add admin conditional
-    if ( user.access > 2)
-      return (
-        <div>
-          <IconButton
-            aria-label="more"
-            id="fade-button"
-            aria-controls={open ? "fade-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-            sx={{ mt: 3 }}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="fade-menu"
-            MenuListProps={{
-              "aria-labelledby": "fade-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-          >
-            <MenuItem sx={{ color: "green" }} onClick={handleRestoreButton}>
-              Restore
-            </MenuItem>
-          </Menu>
-        </div>
-      );
-  };
-
   return (
     <Tooltip title={`Uploaded by: ${soundclip.username}`} placement="top">
       <Card sx={{ mt: 0.5, pb: 3, pt: 3, width: "170px", height: "130px" }}>
@@ -92,15 +59,47 @@ function DeletedSoundboardItem({ soundclip }) {
             sx={{ cursor: "pointer", mb: 1.5, pr: 7, pl: 7, color: "#ff6666" }}
           />
           <br />
-          <Typography variant="h7" onClick={handlePlay} sx={{ cursor: "pointer", maxWidth: "140px" }}>
+          <Typography
+            variant="h7"
+            onClick={handlePlay}
+            sx={{ cursor: "pointer", maxWidth: "140px" }}
+          >
             {soundclip.title}
           </Typography>
           <br />
-          {handleRestoreMenu()}
+          {user.access > 2 && (
+            <div>
+              <IconButton
+                aria-label="more"
+                id="fade-button"
+                aria-controls={open ? "fade-menu" : undefined}
+                aria-expanded={open ? "true" : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+                sx={{ mt: 3 }}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  "aria-labelledby": "fade-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+              >
+                <MenuItem sx={{ color: "green" }} onClick={handleRestoreButton}>
+                  Restore
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
         </CardContent>
       </Card>
     </Tooltip>
   );
-};
+}
 
 export default DeletedSoundboardItem;

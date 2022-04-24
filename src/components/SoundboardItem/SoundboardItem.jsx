@@ -24,7 +24,7 @@ function SoundboardItem({ soundclip }) {
 
   if (user.access > 2 || user.id == soundclip.user_id) {
     deleteButton = true;
-  }
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
