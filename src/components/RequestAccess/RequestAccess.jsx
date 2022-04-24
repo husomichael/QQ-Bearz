@@ -16,13 +16,13 @@ function RequestAccess() {
     toast.success(`Request Submitted!`);
   };
 
-  function requestAccessConditional() {
-    if (user.access == 1) {
-      return (
-        <Paper
+  return(
+    <Paper
         sx={{ pt: 1, mt: 15, ml: 45, mr: 45, width: '500px', height: '635px', backgroundColor: "#F1F1F1"}}
-      >
-          <Box
+     >
+    {user.access == 1 && (
+      <div>
+        <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -45,25 +45,23 @@ function RequestAccess() {
               below.
             </Typography>
           </Box>
-          {/* If user hasn't submitted a request, show Submit Request button */}
           {!user.soundboard_access && (
             <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ mt: 15 }}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 15 }}
+          >
+            <Button
+              onClick={handleRequestSubmit}
+              size="large"
+              variant="contained"
+              color="success"
             >
-              <Button
-                onClick={handleRequestSubmit}
-                size="large"
-                variant="contained"
-                color="success"
-              >
-                Submit Request
-              </Button>
-            </Box>
+              Submit Request
+            </Button>
+          </Box>
           )}
-          {/* If user has submitted a request, show "Request Submitted!" text instead. */}
           {user.soundboard_access && (
             <Box
               display="flex"
@@ -76,12 +74,10 @@ function RequestAccess() {
               </Typography>
             </Box>
           )}
-        </Paper>
-      );
-    }
-  }
-
-  return <div>{() => requestAccessConditional()}</div>;
+      </div>
+    )}
+    </Paper>
+  )
 };
 
 export default RequestAccess;
