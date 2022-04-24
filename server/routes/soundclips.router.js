@@ -3,8 +3,6 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const cloudinaryUpload = require('../modules/cloudinary-config');
-const { getAudioDurationInSeconds } = require('get-audio-duration');
-const fs = require('fs');
 
 // POSTs a new soundclip to cloudinary and then the DB, then inserts related tags to the tags table.
 router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), async (req, res) => {
@@ -63,7 +61,8 @@ router.post('/', rejectUnauthenticated, cloudinaryUpload.single('soundclip'), as
 
 router.get('/', rejectUnauthenticated, (req, res) => {
   const sqlText = `
-    SELECT * FROM "soundclips";
+    SELECT * FROM "soundclips"
+    ORDER BY lower("title");
   `;
   pool.query(sqlText, [])
     .then((dbRes) => {

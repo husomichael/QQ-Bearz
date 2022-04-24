@@ -20,6 +20,7 @@ function LandingPage() {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        sx={{mt: 15}}
       >
         <RegisterForm />
       </Box>

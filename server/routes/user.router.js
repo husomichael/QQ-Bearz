@@ -5,7 +5,6 @@ const {
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
-
 const router = express.Router();
 
 // Handles Ajax request for user information if user is authenticated
@@ -70,7 +69,8 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
   if(req.user.access == 3){
     const queryText = `
       SELECT "id", "username", "access", "soundboard_access" FROM "user"
-      WHERE "access"<$1;
+      WHERE "access"<$1
+      ORDER BY "soundboard_access" DESC;
     `;
     pool.query(queryText, [3])
       .then((dbRes) => {
@@ -82,7 +82,8 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
   }else if(req.user.access == 4){
     const queryText = `
       SELECT "id", "username", "access", "soundboard_access" FROM "user"
-      WHERE "access"<$1;
+      WHERE "access"<$1
+      ORDER BY "soundboard_access" DESC;
     `;
     pool.query(queryText, [4])
       .then((dbRes) => {
