@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, Button, Paper } from "@mui/material";
+import toast from 'react-hot-toast';
 
 function RequestAccess() {
   const dispatch = useDispatch();
@@ -12,7 +13,8 @@ function RequestAccess() {
     dispatch({
       type: "SUBMIT_SOUNDBOARD_REQUEST",
     });
-  }
+    toast.success(`Request Submitted!`);
+  };
 
   function requestAccessConditional() {
     if (user.access == 1) {

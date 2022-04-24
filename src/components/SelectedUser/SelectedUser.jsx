@@ -3,12 +3,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import toast from 'react-hot-toast';
 
 function SelectedUser() {
   const dispatch = useDispatch();
@@ -35,6 +31,7 @@ function SelectedUser() {
       type: "UPDATE_USER_ACCESS",
       payload: {userAccess: userAccess, id: selectedUser.id}
     })
+    toast.success(`Changes submitted!`);
     history.push('/manageaccess');
   };
 

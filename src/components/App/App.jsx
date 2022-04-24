@@ -24,12 +24,10 @@ import RequestAccess from "../RequestAccess/RequestAccess.jsx";
 import GrantAccess from "../GrantAccess/GrantAccess.jsx";
 import SelectedUser from "../SelectedUser/SelectedUser.jsx";
 import DeletedSoundboard from "../DeletedSoundboard/DeletedSoundboard.jsx";
-
 import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
-
   const user = useSelector((store) => store.user);
 
   useEffect(() => {
@@ -136,13 +134,33 @@ function App() {
               <UserProfile />
             </ProtectedRoute>
             <ProtectedRoute exact path="/manageaccess">
-              <GrantAccess />
+            {user.access > 2 && <GrantAccess />}
+            {user.access < 3 && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ mt: 10 }}
+                >
+                  <h1>404</h1>
+                </Box>
+              )}
             </ProtectedRoute>
             <ProtectedRoute exact path="/requestaccess">
               <RequestAccess />
             </ProtectedRoute>
             <ProtectedRoute exact path="/selecteduser/:id">
-              <SelectedUser />
+            {user.access > 2 && <SelectedUser />}
+            {user.access < 3 && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ mt: 10 }}
+                >
+                  <h1>404</h1>
+                </Box>
+              )}
             </ProtectedRoute>
             <ProtectedRoute exact path="/deletedsoundboard">
               {user.access > 2 && <DeletedSoundboard />}
@@ -173,6 +191,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;

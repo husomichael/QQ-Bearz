@@ -30,7 +30,7 @@ function DeletedSoundboard() {
           >
             <Typography variant="h6">Deleted Clips</Typography>
           </Box>
-          <Grid container spacing={1} sx={{ mt: 5, ml: 0.4 }}>
+          <Grid container spacing={1} sx={{ mt: 19.3, ml: 0.4 }}>
             {soundclips.map((soundclip) => {
               if (soundclip.deleted == true) {
                 return (

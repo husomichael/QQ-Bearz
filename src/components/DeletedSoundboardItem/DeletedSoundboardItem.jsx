@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import toast from 'react-hot-toast';
 
 function DeletedSoundboardItem({ soundclip }) {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function DeletedSoundboardItem({ soundclip }) {
       type: "RESTORE_SOUND_CLIP",
       payload: { id: soundclip.id, url: soundclip.url },
     });
+    toast.success(`Soundclip restored!`);
     handleClose();
   }
 
@@ -99,6 +101,6 @@ function DeletedSoundboardItem({ soundclip }) {
       </Card>
     </Tooltip>
   );
-}
+};
 
 export default DeletedSoundboardItem;
